@@ -29,7 +29,7 @@
 
             <beer-reviews :reviews="beer.reviews"></beer-reviews>
         </div>
-        <beer-review-form v-else :beer="beer"></beer-review-form>
+        <beer-review-form v-else :beer="beer" @close="reviewing = false"></beer-review-form>
     </div>
 </template>
 

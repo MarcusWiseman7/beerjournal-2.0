@@ -135,6 +135,9 @@ export const getters = {
             return acc;
         }, {});
     },
+    isTouchScreen() {
+        return !!('ontouchstart' in window || navigator.maxTouchPoints);
+    },
 };
 
 export const mutations = {
@@ -146,6 +149,10 @@ export const mutations = {
     },
     toggle(state, item) {
         state[item] = !state[item];
+    },
+    updateBeerList(state, beer) {
+        const indx = state.beers.findIndex(x => x._id == beer._id);
+        state.beers.slice(indx, 1, beer);
     },
 };
 
@@ -311,6 +318,43 @@ export const actions = {
                 commit('setObj', {
                     name: 'bMessage',
                     obj: { message: 'Delete user error', name: 'error' },
+                });
+            })
+            .finally(() => {
+                commit('toggle', 'loading');
+                return;
+            });
+    },
+    async getBeer({ commit }, id) {
+        return await this.$axios
+            .$get(`/api2/beers/getBeer/${id}`)
+            .then(res => {
+                commit('updateBeerList', res.data.beer);
+            })
+            .catch(err => {
+                console.warn('Get beer error :>> ', err);
+            })
+            .finally(() => {
+                return;
+            });
+    },
+    async addReview({ commit, dispatch }, params) {
+        commit('toggle', 'loading');
+
+        return await this.$axios
+            .$post('/api2/reviews/addReview', params)
+            .then(async () => {
+                commit('setObj', {
+                    name: 'bMessage',
+                    obj: { message: 'Review added', countdown: 4000 },
+                });
+                await dispatch('getBeer', params.beerId);
+            })
+            .catch(err => {
+                console.warn('Add review error :>> ', err);
+                commit('setObj', {
+                    name: 'bMessage',
+                    obj: { message: 'Add review error, please try again', name: 'error' },
                 });
             })
             .finally(() => {

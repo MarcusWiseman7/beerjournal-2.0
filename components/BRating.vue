@@ -61,6 +61,7 @@ export default {
             this.pRating = b;
             this.cRating = this.pRating;
             this.$emit('my-rating', this.pRating);
+            this.$emit('clicked');
         },
         calcRating() {
             const current = Math.max(this.hovering);

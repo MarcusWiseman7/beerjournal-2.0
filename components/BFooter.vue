@@ -26,6 +26,7 @@ footer {
     align-items: center;
     max-width: 100vw;
     background-color: #fff;
+    z-index: 1;
 
     span {
         margin: 24px 0;
