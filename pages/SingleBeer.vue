@@ -12,7 +12,7 @@
         </div>
 
         <div v-if="!reviewing">
-            <b-rating :rating="beer.averageRating"></b-rating>
+            <b-rating :id="'single-beer-' + id" :rating="beer.averageRating"></b-rating>
 
             <div class="beer__stats">
                 <div class="beer__stats--half">

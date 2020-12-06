@@ -2,9 +2,9 @@
     <div class="rating">
         <BeerSVG
             v-for="b in 5"
-            :key="b"
+            :key="id + '-' + b"
             :percent="percents[b - 1]"
-            :ids="b.toString()"
+            :ids="id + '-' + b.toString()"
             @mouseenter.native="mEnter(b)"
             @mouseleave.native="mLeave(b)"
             @click.native="onClick(b)"
@@ -22,6 +22,7 @@ export default {
     props: {
         rating: { type: Number, default: 0 },
         reviewing: { type: Boolean, default: false },
+        id: { type: String, required: true },
     },
     data() {
         return {
