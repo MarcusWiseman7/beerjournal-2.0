@@ -1,5 +1,5 @@
 <template>
-    <svg class="icon" xmlns="http://www.w3.org/2000/svg">
+    <svg xmlns="http://www.w3.org/2000/svg" :height="maxSize + 5" :width="maxSize" viewBox="0 0 70 75">
         <linearGradient :id="`b${ids}`" x1="0.5" y1="1" x2="0.5" y2="0">
             <stop offset="0%" stop-color="#ffa000" stop-opacity="1" />
             <stop :offset="`${percent}%`" stop-color="#ffe3b3" stop-opacity="1" />
@@ -38,20 +38,12 @@ export default {
     props: {
         percent: { type: Number, default: 0 },
         ids: { type: String, default: '' },
+        size: { type: Number, default: 70 },
+    },
+    computed: {
+        maxSize() {
+            return Math.min(this.size, this.$store.state.isSmallScreen ? 60 : 70);
+        },
     },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-
-.icon {
-    width: 65px;
-    height: 65px;
-
-    @include breakpoint(xs) {
-        width: 70px;
-        height: 75px;
-    }
-}
-</style>

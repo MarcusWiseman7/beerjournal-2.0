@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <b-search class="search"></b-search>
-        <b-wrapper which="searchResults" :items="topBeers"></b-wrapper>
+        <b-wrapper v-if="searchResults" which="searchResults" :items="searchResults"></b-wrapper>
         <b-wrapper which="topBeers" :items="topBeers"></b-wrapper>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     name: 'Home',
     components: { BSearch, BWrapper },
     computed: {
-        ...mapState(['searchResults', 'topBeers']),
+        ...mapState(['searchResults', 'beers', 'topBeers']),
     },
 };
 </script>

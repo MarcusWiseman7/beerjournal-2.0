@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import debounce from '@/debounce';
 
 export default {
@@ -49,17 +50,22 @@ export default {
             query: '',
             typing: false,
             loading: false,
-            phone: true,
         };
     },
     computed: {
+        ...mapState(['isPhoneSize', 'searchQuery']),
         searchValid() {
             return this.query.length > 0;
         },
         placeholderText() {
-            if (!this.phone) return 'Search for beers or breweries...';
+            if (!this.isPhoneSize) return 'Search for beers or breweries...';
             else return 'Beers or breweries...';
         },
+    },
+    watch: {
+        query: debounce(function(q) {
+            this.$store.dispatch('filterBeers', q);
+        }, 400),
     },
     methods: {
         startTyping(e) {
@@ -79,8 +85,11 @@ export default {
             if (this.$refs.searchfld) this.$refs.searchfld.focus();
         },
         getSize() {
-            this.phone = window.innerWidth < 600;
+            this.$store.dispatch('initApp');
         },
+    },
+    created() {
+        if (this.searchQuery && this.searchQuery.length > 0) this.query = this.searchQuery;
     },
     mounted() {
         this.getSize();

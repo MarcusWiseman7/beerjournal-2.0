@@ -1,128 +1,19 @@
+import Vue from 'vue';
+
 export const state = () => ({
     beers: [],
     breweries: [],
+    reviews: [],
+    topBeers: null,
     loading: false,
     breweryInfo: {},
     bMessage: null,
     loginPopup: false,
-    topBeers: [
-        {
-            averagePrice: 85,
-            averageRating: 4,
-            beerName: 'Apollo Galaxy',
-            brewery: {
-                averageBeerRating: 0,
-                dateCreated: '2019-05-13T13:22:29.206Z',
-                description:
-                    'Pivovar Matuška byl založen 13.4.2009 na Velikonoční pondělí . V tento den zde byla uvařena první várka, speciálního tmavého piva. Realizace pivovaru trvala dva roky. Svou velikostí se pivovar řadí do kategorie minipivovarů. Pivovar založil sládek Martin Matuška, který v pivovarnickém oboru pracuje od roku 1981. Pivovar Matuška najdete v obci Broumy, která leží v Chráněné krajinné oblasti Křivoklátsko. Zrealizovat vlastní minipivovar se podařilo jen díky morální podpoře a finanční pomoci celé rodiny. Také pomohlo vědomí, že mladší syn Adam chce v pivovarnickém řemesle pokračovat.↵Pivo vaříme řemeslným způsobem bez filtrace či pasterizace.',
-                location: 'Broumy, Czech Republic',
-                logo: 'https://res.cloudinary.com/dukumou2e/image/upload/v1557818967/breweries/matuska_zv2sfm.jpg',
-                name: 'Matuška',
-                sumOfAllBeerRatings: 0,
-                totalNumberOfBeerRatings: 0,
-                type: 'Micro-brewery',
-                __v: 0,
-                _id: '5cd96f95ca27252c69a813c6',
-            },
-            degrees: 13,
-            logo: '',
-            style: 'APA/Pale Ale',
-            totalNumberOfRatings: 2,
-            _id: '5cb745c36ab6360801bebdad',
-        },
-        {
-            averagePrice: 79,
-            averageRating: 5,
-            beerName: 'California',
-            brewery: {
-                averageBeerRating: 0,
-                dateCreated: '2019-05-13T13:22:29.206Z',
-                description:
-                    'Pivovar Matuška byl založen 13.4.2009 na Velikonoční pondělí . V tento den zde byla uvařena první várka, speciálního tmavého piva. Realizace pivovaru trvala dva roky. Svou velikostí se pivovar řadí do kategorie minipivovarů. Pivovar založil sládek Martin Matuška, který v pivovarnickém oboru pracuje od roku 1981. Pivovar Matuška najdete v obci Broumy, která leží v Chráněné krajinné oblasti Křivoklátsko. Zrealizovat vlastní minipivovar se podařilo jen díky morální podpoře a finanční pomoci celé rodiny. Také pomohlo vědomí, že mladší syn Adam chce v pivovarnickém řemesle pokračovat.↵Pivo vaříme řemeslným způsobem bez filtrace či pasterizace.',
-                location: 'Broumy, Czech Republic',
-                logo: 'https://res.cloudinary.com/dukumou2e/image/upload/v1557818967/breweries/matuska_zv2sfm.jpg',
-                name: 'Matuška',
-                sumOfAllBeerRatings: 0,
-                totalNumberOfBeerRatings: 0,
-                type: 'Micro-brewery',
-                __v: 0,
-                _id: '5cd96f95ca27252c69a813c6',
-            },
-            degrees: 12,
-            style: 'APA/Pale Ale',
-            totalNumberOfRatings: 1,
-            _id: '5cb745f56ab6360801bebdae',
-        },
-        {
-            averagePrice: 83,
-            averageRating: 5,
-            beerName: 'Eldorado',
-            brewery: {
-                averageBeerRating: 0,
-                dateCreated: '2019-05-13T13:22:29.206Z',
-                description:
-                    'Pivovar Matuška byl založen 13.4.2009 na Velikonoční pondělí . V tento den zde byla uvařena první várka, speciálního tmavého piva. Realizace pivovaru trvala dva roky. Svou velikostí se pivovar řadí do kategorie minipivovarů. Pivovar založil sládek Martin Matuška, který v pivovarnickém oboru pracuje od roku 1981. Pivovar Matuška najdete v obci Broumy, která leží v Chráněné krajinné oblasti Křivoklátsko. Zrealizovat vlastní minipivovar se podařilo jen díky morální podpoře a finanční pomoci celé rodiny. Také pomohlo vědomí, že mladší syn Adam chce v pivovarnickém řemesle pokračovat.↵Pivo vaříme řemeslným způsobem bez filtrace či pasterizace.',
-                location: 'Broumy, Czech Republic',
-                logo: 'https://res.cloudinary.com/dukumou2e/image/upload/v1557818967/breweries/matuska_zv2sfm.jpg',
-                name: 'Matuška',
-                sumOfAllBeerRatings: 0,
-                totalNumberOfBeerRatings: 0,
-                type: 'Micro-brewery',
-                __v: 0,
-                _id: '5cd96f95ca27252c69a813c6',
-            },
-            degrees: 13,
-            style: 'APA/Pale Ale',
-            totalNumberOfRatings: 1,
-            _id: '5cb7461b6ab6360801bebdaf',
-        },
-        {
-            averagePrice: 77,
-            averageRating: 0,
-            beerName: 'Blizzard Winter Ale',
-            brewery: {
-                averageBeerRating: 0,
-                dateCreated: '2019-05-13T20:18:50.826Z',
-                description:
-                    'Pivečko jsme měli odjakživa rádi. S postupným znechucením z univerzální chuti mnohých dnešních piv jsme pozvolna přešli k domácímu vaření a nakonec uzrála myšlenka podělit se o chutné pivo i s veřejností.↵↵V březnu 2013 jsme založili pivovar a o tři měsíce později zahájili provoz .Pivovar byl vybudován svépomocně, s nadšením a odhodláním a na jeho pořízení nebyla čerpána žádná dotace ani jiná podobná sprosťárna. Vaříme tradičním řemeslným způsobem z českých surovin, ale svátečně lze ochutnat i pivo např. ze zahraničních chmelů. Ohlasy na tuto pestrost jsou velmi pozitivní a tak k nám cestu nachází i lidé, kteří standardní pivo nepijí. Rozhodně v ní budeme pokračovat.',
-                location: 'Dolní Ředice, Czech Republic',
-                logo: 'https://res.cloudinary.com/dukumou2e/image/upload/v1557778589/breweries/mordyr_ateixz.jpg',
-                name: 'Mordýř',
-                sumOfAllBeerRatings: 0,
-                totalNumberOfBeerRatings: 0,
-                type: 'Micro-brewery',
-                __v: 0,
-                _id: '5cd9d12a6e997705063ae5fc',
-            },
-            degrees: 12,
-            style: 'APA/Pale Ale',
-            totalNumberOfRatings: 2,
-            _id: '5cb747256ab6360801bebdb3',
-        },
-        {
-            averagePrice: 79,
-            averageRating: 4,
-            beerName: 'Heart Attack',
-            brewery: {
-                averageBeerRating: 0,
-                dateCreated: '2019-05-13T20:18:50.826Z',
-                description:
-                    'Pivečko jsme měli odjakživa rádi. S postupným znechucením z univerzální chuti mnohých dnešních piv jsme pozvolna přešli k domácímu vaření a nakonec uzrála myšlenka podělit se o chutné pivo i s veřejností.↵↵V březnu 2013 jsme založili pivovar a o tři měsíce později zahájili provoz .Pivovar byl vybudován svépomocně, s nadšením a odhodláním a na jeho pořízení nebyla čerpána žádná dotace ani jiná podobná sprosťárna. Vaříme tradičním řemeslným způsobem z českých surovin, ale svátečně lze ochutnat i pivo např. ze zahraničních chmelů. Ohlasy na tuto pestrost jsou velmi pozitivní a tak k nám cestu nachází i lidé, kteří standardní pivo nepijí. Rozhodně v ní budeme pokračovat.',
-                location: 'Dolní Ředice, Czech Republic',
-                logo: 'https://res.cloudinary.com/dukumou2e/image/upload/v1557778589/breweries/mordyr_ateixz.jpg',
-                name: 'Mordýř',
-                sumOfAllBeerRatings: 0,
-                totalNumberOfBeerRatings: 0,
-                type: 'Micro-brewery',
-                __v: 0,
-                _id: '5cd9d12a6e997705063ae5fc',
-            },
-            degrees: 16,
-            style: 'IPA',
-            totalNumberOfRatings: 1,
-            _id: '5cb7477d6ab6360801bebdb5',
-        },
-    ],
+    isSmallScreen: true,
+    isTouchScreen: true,
+    isPhoneSize: true,
+    searchResults: null,
+    searchQuery: '',
 });
 
 export const getters = {
@@ -130,49 +21,54 @@ export const getters = {
     myProfile: state => (state.auth.loggedIn ? state.auth.user : null),
     myId: state => (state.auth.loggedIn ? state.auth.user._id : null),
     allBeers: state => {
-        return state.topBeers.reduce((acc, cur) => {
+        return state.beers.reduce((acc, cur) => {
             acc[cur._id] = cur;
             return acc;
         }, {});
     },
-    isTouchScreen() {
-        return !!('ontouchstart' in window || navigator.maxTouchPoints);
-    },
+    topBeers: state => state.beers.filter(x => x.averageRating > 4),
 };
 
 export const mutations = {
-    setItem(state, item) {
-        state[item] = item;
-    },
     setObj(state, params) {
-        state[params.name] = params.obj;
+        Vue.set(state, params.name, params.obj);
     },
     toggle(state, item) {
         state[item] = !state[item];
     },
     updateBeerList(state, beer) {
         const indx = state.beers.findIndex(x => x._id == beer._id);
-        state.beers.slice(indx, 1, beer);
+        if (indx >= 0) state.beers.slice(indx, 1, beer);
+        else state.beers.push(beer);
     },
 };
 
 export const actions = {
-    // async nuxtServerInit({ commit }, { app }) {
-    //     await app.$axios
-    //         .$get('/beers/allBeers')
-    //         .then(res => {
-    //             if (res && res.beers && res.breweries) {
-    //                 commit('setBeers', res.beers);
-    //                 commit('setBreweries', res.breweries);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.warn('Get beers and breweries error :>> ', err);
-    //         })
-    //         .finally(() => {
-    //             return;
-    //         });
-    // },
+    async nuxtServerInit({ commit }, { app }) {
+        await app.$axios
+            .$get('/api2/beers/allBeers')
+            .then(res => {
+                if (res && res.beers && res.breweries) {
+                    commit('setObj', { name: 'beers', obj: res.beers });
+                    commit('setObj', { name: 'breweries', obj: res.breweries });
+                    commit('setObj', { name: 'reviews', obj: res.reviews });
+                    commit('setObj', { name: 'topBeers', obj: res.topBeers });
+                }
+            })
+            .catch(err => {
+                console.warn('Get beers and breweries error :>> ', err);
+            })
+            .finally(() => {
+                return;
+            });
+    },
+    initApp({ commit }) {
+        [
+            ['isTouchScreen', !!('ontouchstart' in window || navigator.maxTouchPoints)],
+            ['isSmallScreen', !!(window.innerWidth < 400)],
+            ['isPhoneSize', !!(window.innerWidth < 600)],
+        ].forEach(x => commit('setObj', { name: x[0], obj: x[1] }));
+    },
     login({ commit, getters }, params) {
         if (getters.myId) return;
         commit('toggle', 'loading');
@@ -324,6 +220,12 @@ export const actions = {
                 commit('toggle', 'loading');
                 return;
             });
+    },
+    filterBeers({ state, commit }, q) {
+        if (!q || !q.length) return commit('setObj', { name: 'searchResults', obj: null });
+        const arr = state.beers.filter(x => x.beerName.includes(q) || x.brewery.name.includes(q));
+        commit('setObj', { name: 'searchQuery', obj: q });
+        commit('setObj', { name: 'searchResults', obj: arr });
     },
     async getBeer({ commit }, id) {
         return await this.$axios

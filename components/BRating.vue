@@ -5,6 +5,7 @@
             :key="id + '-' + b"
             :percent="percents[b - 1]"
             :ids="id + '-' + b.toString()"
+            :size="size"
             @mouseenter.native="mEnter(b)"
             @mouseleave.native="mLeave(b)"
             @click.native="onClick(b)"
@@ -23,6 +24,7 @@ export default {
         rating: { type: Number, default: 0 },
         reviewing: { type: Boolean, default: false },
         id: { type: String, required: true },
+        size: { type: Number, default: 70 },
     },
     data() {
         return {

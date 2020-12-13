@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
     name: 'BeerReviewForm',
@@ -77,10 +77,8 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['isTouchScreen', 'myId']),
-        isMobile() {
-            return window.innerWidth < 600;
-        },
+        ...mapState(['isTouchScreen']),
+        ...mapGetters(['myId']),
         formOK() {
             return this.selected.includes('overall');
         },

@@ -1,5 +1,5 @@
 <template>
-    <div class="b-header">
+    <div class="b-header" :style="'height:' + maxHeight">
         <nuxt-link to="/" class="b-header__title">
             <span>BeerJournal</span>
             <img src="@/assets/icons/beer.svg" alt="beer" />
@@ -17,12 +17,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
     name: 'BHeader',
     computed: {
+        ...mapState(['isSmallScreen']),
         ...mapGetters(['myId']),
+        maxHeight() {
+            return this.isSmallScreen || this.$route.name !== 'index' ? '160px' : '400px';
+        },
     },
 };
 </script>
@@ -32,7 +36,6 @@ export default {
 @import '@/assets/scss/colors';
 
 .b-header {
-    height: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +45,6 @@ export default {
     background-size: contain;
 
     @include breakpoint(m) {
-        height: 400px;
         padding: 40px;
         flex-direction: row;
         justify-content: space-between;

@@ -1,5 +1,8 @@
 <template>
     <div v-if="beer" class="beer">
+        <div class="back" @click="goBack">
+            <img src="@/assets/icons/arrow_back.svg" alt="Back" />
+        </div>
         <div class="beer__title-row">
             <div class="beer__title-row--half">
                 <img :src="beer.logo || beer.brewery.logo" alt="Logo" />
@@ -27,7 +30,7 @@
 
             <b-button group="main" modifier="outline" @clicked="reviewing = true">Add review</b-button>
 
-            <beer-reviews :reviews="beer.reviews"></beer-reviews>
+            <beer-reviews :reviews="reviews"></beer-reviews>
         </div>
         <beer-review-form v-else :beer="beer" @close="reviewing = false"></beer-review-form>
     </div>
@@ -36,10 +39,20 @@
 <script>
 import { mapGetters } from 'vuex';
 import BeerReviews from '@/components/BeerReviews';
+import helpers from '@/helpers';
 
 export default {
     name: 'SingleBeer',
+    mixins: [helpers],
     components: { BeerReviews },
+    async asyncData({ params, store }) {
+        if (!store.getters.allBeers.hasOwnProperty(params.id)) {
+            await store.dispatch('getBeer', params.id);
+        }
+        const beer = await store.getters.allBeers[params.id];
+        const reviews = store.state.reviews.filter(x => x.beer == beer._id);
+        return { beer, reviews };
+    },
     data() {
         return {
             reviewing: false,
@@ -50,13 +63,17 @@ export default {
         id() {
             return this.$route.params.id;
         },
-        beer() {
-            return this.allBeers[this.id];
+    },
+    methods: {
+        goBack() {
+            if (this.reviewing) this.reviewing = false;
+            else this.goBackOrIndex();
         },
     },
     created() {
-        if (!this.$route.params || !this.$route.params.hasOwnProperty('id') || !this.$route.params.id)
+        if (!this.$route.params || !this.$route.params.hasOwnProperty('id') || !this.$route.params.id) {
             this.$router.replace('/');
+        }
     },
 };
 </script>
@@ -69,6 +86,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     &__title-row {
         display: flex;
@@ -117,5 +135,13 @@ export default {
         font-size: 22px;
         height: 50%;
     }
+}
+
+.back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    cursor: pointer;
 }
 </style>

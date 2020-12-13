@@ -9,6 +9,7 @@
             <h3>{{ item.beerName }}</h3>
             <h5>{{ item.brewery.name }}</h5>
             <p>{{ item.style }}</p>
+            <b-rating :rating="item.averageRating" :id="item._id" :size="16"></b-rating>
         </div>
     </nuxt-link>
     <nuxt-link v-else-if="item" :to="{ name: 'SingleBrewery', params: { id: item._id } }" class="item">
@@ -31,6 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/mixins';
+@import '@/assets/scss/colors';
 
 .item {
     display: flex;
@@ -42,11 +44,24 @@ export default {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     }
 
+    img {
+        height: 100px;
+        width: 100px;
+    }
+
     &__desc {
         margin-left: 6px;
         padding: 8px 0 0 0;
         display: flex;
         flex-direction: column;
+        color: $textcolor;
+        width: 160px;
+        overflow: hidden;
+        word-wrap: break-word;
+
+        h3 {
+            color: $maincolor;
+        }
     }
 
     &:hover {

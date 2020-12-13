@@ -35,6 +35,9 @@ export default {
     computed: {
         ...mapState(['loading', 'bMessage', 'loginPopup']),
     },
+    mounted() {
+        this.$store.dispatch('initApp');
+    },
 };
 </script>
 
