@@ -1,64 +1,75 @@
 <template>
     <ul v-if="reviews">
         <li v-for="r in reviews" :key="r._id" class="review">
-            <div class="review__top-row">
-                <div class="review__left-side">
-                    <img v-if="r.pic" :src="r.pic" alt="Review pic" />
-                    <BeerSVG v-else />
-                    <div class="review__info">
-                        <h4>{{ r.reviewer.name }}</h4>
-                        <p>{{ r.date || r.dateCreated }}</p>
+            <img v-if="r.pic" :src="r.pic" alt="Review pic" />
+            <img
+                v-else
+                src="https://res.cloudinary.com/dukumou2e/image/upload/v1557745360/breweries/lazy-src_zpkrwj.jpg"
+                alt="Beer"
+            />
+            <div class="review__info">
+                <div class="review__top-row">
+                    <div>
+                        <h3>{{ r.reviewer.name }}</h3>
+                        <p>{{ prettyDate(r.date || r.dateCreated) }}</p>
                     </div>
+                    <b-rating :rating="r.rating" :size="16" :id="r._id"></b-rating>
                 </div>
-                <b-rating :rating="r.rating" :size="16" :id="r._id"></b-rating>
-            </div>
-            <div v-if="r.notes && r.notes.length > 0" class="review__notes">
-                <p>"{{ r.notes }}"</p>
+                <p v-if="r.notes && r.notes.length > 0" class="review__notes">"{{ r.notes }}"</p>
             </div>
         </li>
     </ul>
 </template>
 
 <script>
-import BeerSVG from '@/components/BeerSVG';
+import helpers from '@/helpers';
 
 export default {
     name: 'BeerReviews',
+    mixins: [helpers],
     props: {
         reviews: { type: Array, default: () => null },
     },
-    components: { BeerSVG },
 };
 </script>
 
 <style lang="scss" scoped>
-.review {
-    padding: 20px 0;
+@import '@/assets/scss/mixins';
 
-    &__top-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.review {
+    padding: 20px;
+    display: flex;
+
+    @include breakpoint(m) {
+        padding: 20px 0;
     }
 
-    &__left-side {
-        display: flex;
-
-        img {
-            height: 100px;
-            width: 100px;
-        }
+    img {
+        height: 100px;
+        width: 100px;
     }
 
     &__info {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
+    }
+
+    &__top-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        p {
+            font-size: 12px;
+        }
     }
 
     &__notes {
+        margin-top: 10px;
+        text-align: right;
         font-style: italic;
-        margin: 10px 0 10px 20px;
     }
 }
 </style>

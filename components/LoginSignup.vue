@@ -39,7 +39,11 @@
             </div>
         </div>
         <div v-if="step == 2" class="auth__inputs">
-            <b-input label="Display name" :error="errors.displayName || displayNameExists" :errorMsg="displayNameErrorMsg">
+            <b-input
+                label="Display name"
+                :error="errors.displayName || displayNameExists"
+                :errorMsg="displayNameErrorMsg"
+            >
                 <input
                     type="text"
                     maxlength="60"
@@ -190,7 +194,6 @@ export default {
         },
         addUser() {
             if (!this.formOK) return;
-
             this.$store.dispatch('addUser', this.contact);
         },
     },

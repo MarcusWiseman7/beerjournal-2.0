@@ -40,7 +40,7 @@
                     id="tasting_notes"
                     rows="4"
                     placeholder="My review..."
-                    maxlength="400"
+                    maxlength="250"
                 ></textarea>
             </b-input>
         </div>
@@ -61,10 +61,9 @@ export default {
     },
     data() {
         return {
-            newRating: { rating: 0, color: 0, bitter: 0, finish: 0, notes: '' },
+            newRating: { rating: 0, bitter: 0, finish: 0, notes: '' },
             questions: [
                 { id: 'rating', label: 'Overall rating', lside: 'gross', rside: 'damn good' },
-                { id: 'color', label: 'Color is light / dark?', lside: 'light', rside: 'dark' },
                 { id: 'bitter', label: 'How bitter is it?', lside: 'sugar', rside: 'tree bark' },
                 { id: 'finish', label: 'Finish / aftertaste?', lside: 'bad', rside: 'good' },
             ],
@@ -80,7 +79,7 @@ export default {
         ...mapState(['isTouchScreen']),
         ...mapGetters(['myId']),
         formOK() {
-            return this.selected.includes('overall');
+            return this.selected.includes('rating');
         },
     },
     methods: {
@@ -112,12 +111,21 @@ export default {
             formData.append('file', this.uploadedFile);
             formData.append('upload_preset', 'dqwdrkz4');
 
-            this.newRating.picURL = await this.$axios
+            const blah = this.$axios.defaults.headers.common['Authorization'];
+            this.$axios.setToken(false);
+
+            await this.$axios
                 .post('https://api.cloudinary.com/v1_1/dqrpaoopz/image/upload', formData)
                 .then(res => {
-                    return res.data.secure_url;
+                    this.newRating.pic = res.data.secure_url;
+                    this.newRating.picId = res.data.public_id;
                 })
-                .catch(err => {});
+                .catch(err => {
+                    console.warn('addPic error :>> ', err);
+                })
+                .finally(() => {
+                    if (blah) this.$axios.setToken(blah);
+                });
 
             return;
         },
@@ -126,15 +134,19 @@ export default {
 
             if (this.uploadedFile) {
                 await this.addPic();
+                if (!this.newRating.picURL) return;
             }
 
-            await this.$store.dispatch('addReview', { review: this.newRating, beerId: this.beer._id, myId: this.myId });
+            this.newRating.beer = this.beer._id;
+            this.newRating.reviewer = this.myId;
+
+            await this.$store.dispatch('addReview', this.newRating);
 
             this.$emit('close');
         },
     },
     beforeDestroy() {
-        if (this.actImage) window.URL.revokeObjectURL(this.actImage);
+        if (this.actImage) window.URL.revokeObjectURL(this.uploadedFile);
     },
 };
 </script>

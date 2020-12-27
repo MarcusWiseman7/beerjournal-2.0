@@ -69,7 +69,7 @@ export const actions = {
             ['isPhoneSize', !!(window.innerWidth < 600)],
         ].forEach(x => commit('setObj', { name: x[0], obj: x[1] }));
     },
-    login({ commit, getters }, params) {
+    login({ state, commit, getters }, params) {
         if (getters.myId) return;
         commit('toggle', 'loading');
 
@@ -80,7 +80,7 @@ export const actions = {
             .then(() => {
                 setTimeout(() => {
                     if (getters.myProfile) {
-                        commit('toggle', 'loginPopup');
+                        if (state.loginPopup) commit('toggle', 'loginPopup');
                         commit('setObj', {
                             name: 'bMessage',
                             obj: { message: `Welcome back, ${getters.myProfile.displayName}!` },
@@ -153,7 +153,7 @@ export const actions = {
         commit('toggle', 'loading');
 
         return await this.$axios
-            .$get('/api/users/checkDB', params)
+            .$post('/api/users/checkDB', params)
             .then(res => {
                 return res;
             })
@@ -240,17 +240,33 @@ export const actions = {
                 return;
             });
     },
-    async addReview({ commit, dispatch }, params) {
+    async getReviewsForBeer({ commit }, id) {
+        commit('toggle', 'loading');
+
+        return await this.$axios
+            .$get('/api2/reviews/' + id)
+            .then(res => {
+                return res.data.reviews;
+            })
+            .catch(err => {
+                console.warn('Get reviews error :>> ', err);
+            })
+            .finally(() => {
+                commit('toggle', 'loading');
+            });
+    },
+    async addReview({ commit }, params) {
         commit('toggle', 'loading');
 
         return await this.$axios
             .$post('/api2/reviews/addReview', params)
-            .then(async () => {
+            .then(res => {
+                console.log('res :>> ', res);
+                commit('updateBeerList', res.data.beer);
                 commit('setObj', {
                     name: 'bMessage',
                     obj: { message: 'Review added', countdown: 4000 },
                 });
-                await dispatch('getBeer', params.beerId);
             })
             .catch(err => {
                 console.warn('Add review error :>> ', err);

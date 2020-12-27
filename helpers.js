@@ -7,5 +7,9 @@ export default {
             if (this.$router.$from) this.$router.go(-1);
             else this.$router.push('/');
         },
+        prettyDate(d) {
+            const date = new Date(d);
+            return date.toLocaleDateString();
+        },
     },
 };

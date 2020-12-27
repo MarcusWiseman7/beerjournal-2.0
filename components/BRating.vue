@@ -11,6 +11,7 @@
             @click.native="onClick(b)"
             :class="{ pointer: reviewing }"
         ></BeerSVG>
+        <div v-if="!reviewing && cRating" class="number" :class="{ small: size < 70 }">({{ cRating }})</div>
     </div>
 </template>
 
@@ -81,9 +82,21 @@ export default {
 <style lang="scss" scoped>
 .rating {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
 }
 
 .pointer {
     cursor: pointer;
+}
+
+.number {
+    margin-left: 8px;
+}
+
+.small {
+    font-size: 12px;
+    margin-left: 2px;
 }
 </style>

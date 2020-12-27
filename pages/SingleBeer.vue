@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div v-if="!reviewing">
+        <div v-if="!reviewing" class="beer__content">
             <b-rating :id="'single-beer-' + id" :rating="beer.averageRating"></b-rating>
 
             <div class="beer__stats">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <b-button group="main" modifier="outline" @clicked="reviewing = true">Add review</b-button>
+            <b-button class="button" group="main" modifier="outline" @clicked="reviewing = true">Add review</b-button>
 
             <beer-reviews :reviews="reviews"></beer-reviews>
         </div>
@@ -46,6 +46,7 @@ export default {
     mixins: [helpers],
     components: { BeerReviews },
     async asyncData({ params, store }) {
+        if (!params.id) return;
         if (!store.getters.allBeers.hasOwnProperty(params.id)) {
             await store.dispatch('getBeer', params.id);
         }
@@ -81,6 +82,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/colors';
 
+.button {
+    margin-bottom: 20px;
+}
+
 .beer {
     padding: 40px 0;
     display: flex;
@@ -103,6 +108,11 @@ export default {
                 padding-left: 10px;
             }
         }
+    }
+
+    &__content {
+        width: 100%;
+        max-width: 600px;
     }
 
     &__info {
