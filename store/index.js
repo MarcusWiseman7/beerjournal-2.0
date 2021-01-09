@@ -56,7 +56,7 @@ export const actions = {
                 }
             })
             .catch(err => {
-                console.warn('Get beers and breweries error :>> ', err);
+                console.warn('Server init error :>> ', err);
             })
             .finally(() => {
                 return;

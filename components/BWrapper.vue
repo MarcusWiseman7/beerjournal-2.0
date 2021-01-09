@@ -11,7 +11,7 @@
             <div v-else-if="which == 'searchResults'" class="wrapper__no-results">
                 <h3>Sorry, no results for {{ $store.state.searchQuery }}...</h3>
             </div>
-            <div v-if="items.length > maxResults" class="wrapper__actions">
+            <div v-if="items && items.length > maxResults" class="wrapper__actions">
                 <b-button group="quick" modifier="outline" @clicked="maxResults += 6">Show more</b-button>
             </div>
         </div>

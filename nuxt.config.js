@@ -47,15 +47,13 @@ export default {
     },
     proxy: {
         '/api/': {
-            // target: 'http://example.com',
-            target: process.env.API_URI || 'http://localhost:8080',
+            target: 'http://localhost:8080',
             pathRewrite: {
                 '^/api/': '/',
             },
         },
         '/api2/': {
-            // target: 'http://example.com',
-            target: process.env.API_URI || 'http://localhost:8080',
+            target: 'http://localhost:8080',
             pathRewrite: {
                 '^/api2/': '/beerjournal/',
             },
