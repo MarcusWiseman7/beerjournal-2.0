@@ -102,9 +102,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-@import '@/assets/scss/colors';
-
 $search-height: 60px;
 $border: #e6e6e6;
 

@@ -51,8 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-
 .wrapper {
     display: flex;
     justify-content: center;

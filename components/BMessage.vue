@@ -32,8 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/colors';
-
 .b-message {
     color: #fff;
     font-size: 18px;

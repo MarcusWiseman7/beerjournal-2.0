@@ -32,9 +32,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-@import '@/assets/scss/colors';
-
 .b-header {
     display: flex;
     flex-direction: column;

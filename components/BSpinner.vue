@@ -11,8 +11,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/colors';
-
 .spinner-wrap {
     background: #282c2dad;
     display: flex;

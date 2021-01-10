@@ -5,10 +5,14 @@
         </div>
         <div class="beer__title-row">
             <div class="beer__title-row--half">
-                <img :src="beer.logo || beer.brewery.logo" alt="Logo" />
+                <nuxt-link :to="`/SingleBrewery/${beer.brewery._id}`">
+                    <img :src="beer.logo || beer.brewery.logo" alt="Logo" />
+                </nuxt-link>
             </div>
             <div class="beer__info beer__title-row--half">
-                <h1>{{ beer.brewery.name }}</h1>
+                <nuxt-link :to="`/SingleBrewery/${beer.brewery._id}`">
+                    <h1>{{ beer.brewery.name }}</h1>
+                </nuxt-link>
                 <h2>{{ beer.beerName }}</h2>
                 <p>{{ beer.style }}</p>
             </div>
@@ -45,12 +49,15 @@ export default {
     name: 'SingleBeer',
     mixins: [helpers],
     components: { BeerReviews },
-    async asyncData({ params, store }) {
-        if (!params.id) return;
+    async asyncData({ params, store, redirect }) {
+        if (!params.id) return redirect('/');
+        if (!store.getters.allBeers || !store.getters.allBeers.length > 0) {
+            await store.dispatch('getAllBeers');
+        }
         if (!store.getters.allBeers.hasOwnProperty(params.id)) {
             await store.dispatch('getBeer', params.id);
         }
-        const beer = await store.getters.allBeers[params.id];
+        const beer = store.getters.allBeers[params.id];
         const reviews = store.state.reviews.filter(x => x.beer == beer._id);
         return { beer, reviews };
     },
@@ -100,6 +107,10 @@ export default {
         &--half {
             width: 50%;
 
+            img {
+                width: 100px;
+            }
+
             &:first-child {
                 padding-right: 10px;
             }
@@ -119,6 +130,7 @@ export default {
         h1 {
             color: $maincolor;
             font-weight: 500;
+            cursor: pointer;
         }
     }
 

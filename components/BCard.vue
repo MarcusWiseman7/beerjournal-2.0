@@ -1,9 +1,5 @@
 <template>
-    <nuxt-link
-        v-if="item && item.hasOwnProperty('brewery')"
-        :to="{ name: 'SingleBeer', params: { id: item._id } }"
-        class="item"
-    >
+    <nuxt-link v-if="item && item.hasOwnProperty('brewery')" :to="`/SingleBeer/${item._id}`" class="item">
         <img :src="item.logo ? item.logo : item.brewery.logo" alt="logo" />
         <div class="item__desc">
             <h3>{{ item.beerName }}</h3>
@@ -12,7 +8,7 @@
             <b-rating :rating="item.averageRating" :id="item._id" :size="16"></b-rating>
         </div>
     </nuxt-link>
-    <nuxt-link v-else-if="item" :to="{ name: 'SingleBrewery', params: { id: item._id } }" class="item">
+    <nuxt-link v-else-if="item" :to="`/SingleBrewery/${item._id}`" class="item">
         <img :src="item.logo ? item.logo : ''" alt="logo" />
         <div class="item__desc">
             <h3>{{ item.name }}</h3>
@@ -31,9 +27,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-@import '@/assets/scss/colors';
-
 .item {
     display: flex;
     margin: 10px 10px;

@@ -39,7 +39,12 @@ export default {
         '@nuxtjs/component-cache',
         '@nuxtjs/auth',
         '@nuxtjs/proxy',
+        '@nuxtjs/style-resources',
     ],
+
+    styleResources: {
+        scss: ['./assets/scss/_colors.scss', './assets/scss/_mixins.scss'],
+    },
 
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {

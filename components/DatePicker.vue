@@ -173,8 +173,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/sass/colors';
-
 .picker {
     background-color: $backgroundcolor;
     position: absolute;

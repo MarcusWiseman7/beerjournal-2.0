@@ -114,9 +114,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-@import '@/assets/scss/colors';
-
 label {
     font-weight: 700;
     font-size: 13px;

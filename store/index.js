@@ -26,6 +26,12 @@ export const getters = {
             return acc;
         }, {});
     },
+    allBreweries: state => {
+        return state.breweries.reduce((acc, cur) => {
+            acc[cur._id] = cur;
+            return acc;
+        }, {});
+    },
     topBeers: state => state.beers.filter(x => x.averageRating > 4),
 };
 
@@ -40,6 +46,11 @@ export const mutations = {
         const indx = state.beers.findIndex(x => x._id == beer._id);
         if (indx >= 0) state.beers.slice(indx, 1, beer);
         else state.beers.push(beer);
+    },
+    updateBreweryList(state, brewery) {
+        const indx = state.breweries.findIndex(x => x._id == brewery.id);
+        if (indx >= 0) state.breweries.slice(indx, 1, brewery);
+        else state.breweries.push(brewery);
     },
 };
 
@@ -227,6 +238,24 @@ export const actions = {
         commit('setObj', { name: 'searchQuery', obj: q });
         commit('setObj', { name: 'searchResults', obj: arr });
     },
+    async getAllBeers({ commit }) {
+        await this.$axios
+            .$get('/api2/beers/allBeers')
+            .then(res => {
+                if (res && res.beers && res.breweries) {
+                    commit('setObj', { name: 'beers', obj: res.beers });
+                    commit('setObj', { name: 'breweries', obj: res.breweries });
+                    commit('setObj', { name: 'reviews', obj: res.reviews });
+                    commit('setObj', { name: 'topBeers', obj: res.topBeers });
+                }
+            })
+            .catch(err => {
+                console.warn('Get all error :>> ', err);
+            })
+            .finally(() => {
+                return;
+            });
+    },
     async getBeer({ commit }, id) {
         return await this.$axios
             .$get(`/api2/beers/getBeer/${id}`)
@@ -235,6 +264,19 @@ export const actions = {
             })
             .catch(err => {
                 console.warn('Get beer error :>> ', err);
+            })
+            .finally(() => {
+                return;
+            });
+    },
+    async getBrewery({ commit }, id) {
+        return await this.$axios
+            .$get(`/api2/breweries/getBrewery/${id}`)
+            .then(res => {
+                commit('updateBreweryList', res.data.brewery);
+            })
+            .catch(err => {
+                console.warn('Get brewery error :>> ', err);
             })
             .finally(() => {
                 return;

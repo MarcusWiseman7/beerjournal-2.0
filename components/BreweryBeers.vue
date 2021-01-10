@@ -1,42 +1,42 @@
 <template>
-    <ul v-if="reviews">
-        <li v-for="r in reviews" :key="r._id" class="review">
-            <img v-if="r.pic" :src="r.pic" alt="Review pic" />
+    <ul v-if="beers">
+        <nuxt-link v-for="b in beers" :key="b._id" :to="`/SingleBeer/${b._id}`" class="beer" tag="li">
+            <img v-if="b.logo || breweryLogo" :src="b.logo || breweryLogo" alt="Logo" />
             <img
                 v-else
                 src="https://res.cloudinary.com/dukumou2e/image/upload/v1557745360/breweries/lazy-src_zpkrwj.jpg"
                 alt="Beer"
             />
-            <div class="review__info">
-                <div class="review__top-row">
+            <div class="beer__info">
+                <div class="beer__top-row">
                     <div>
-                        <h3 v-if="r.reviewer">{{ r.reviewer.displayName || r.reviewer.name }}</h3>
-                        <p>{{ prettyDate(r.date || r.dateCreated) }}</p>
+                        <h2>{{ b.beerName }}</h2>
+                        <h3>{{ b.style }}</h3>
+                        <p>{{ b.degrees }}/{{ b.abv }}</p>
                     </div>
-                    <b-rating :rating="r.rating" :size="16" :id="r._id"></b-rating>
+                    <b-rating :rating="b.averageRating" :size="16" :id="b._id"></b-rating>
                 </div>
-                <p v-if="r.notes && r.notes.length > 0" class="review__notes">"{{ r.notes }}"</p>
+                <p class="beer__notes">{{ b.description }}</p>
             </div>
-        </li>
+        </nuxt-link>
     </ul>
 </template>
 
 <script>
-import helpers from '@/helpers';
-
 export default {
-    name: 'BeerReviews',
-    mixins: [helpers],
+    name: 'BreweryBeers',
     props: {
-        reviews: { type: Array, default: () => null },
+        beers: { type: Array, default: () => null },
+        breweryLogo: { type: String, default: '' },
     },
 };
 </script>
 
 <style lang="scss" scoped>
-.review {
+.beer {
     padding: 20px;
     display: flex;
+    cursor: pointer;
 
     @include breakpoint(m) {
         padding: 20px 0;

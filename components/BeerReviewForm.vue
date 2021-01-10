@@ -152,9 +152,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/mixins';
-@import '@/assets/scss/colors';
-
 label {
     color: $maincolor;
     font-weight: 700;

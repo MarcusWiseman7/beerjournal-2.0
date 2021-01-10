@@ -62,9 +62,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/colors';
-@import '@/assets/scss/mixins';
-
 //mobile
 $button--main-height: 46px;
 $button--cta-height: 38px;
