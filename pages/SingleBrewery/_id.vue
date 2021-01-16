@@ -62,7 +62,7 @@ export default {
         return {};
     },
     mounted() {
-        console.log('this.$router.$from :>> ', this.$router);
+        console.log('this.$router.$from :>>', this.$router);
     },
 };
 </script>
