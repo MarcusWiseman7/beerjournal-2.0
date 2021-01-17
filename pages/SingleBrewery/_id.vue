@@ -5,7 +5,7 @@
         </div>
         <div class="brewery__title-row">
             <div class="brewery__title-row--half">
-                <img :src="brewery.logo" alt="Logo" />
+                <b-pic :src="brewery.logo ? brewery.logo : ''" alt="Logo"></b-pic>
             </div>
             <div class="brewery__info brewery__title-row--half">
                 <h1>{{ brewery.name }}</h1>
@@ -50,19 +50,14 @@ export default {
         if (!store.getters.allBreweries.hasOwnProperty(params.id)) {
             await store.dispatch('getBrewery', params.id);
         }
-        if (!store.getters.allBeers || !store.getters.allBeers.length > 0) {
-            await store.dispatch('getAllBeers');
-        }
 
         const brewery = store.getters.allBreweries[params.id];
         const beers = store.state.beers.filter(x => x.brewery._id == params.id);
+
         return { brewery, beers };
     },
     data() {
         return {};
-    },
-    mounted() {
-        console.log('this.$router.$from :>> ', this.$router);
     },
 };
 </script>
@@ -88,6 +83,8 @@ export default {
 
             &:first-child {
                 padding-right: 10px;
+                display: flex;
+                justify-content: flex-end;
             }
 
             &:last-child {

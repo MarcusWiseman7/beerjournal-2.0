@@ -1,16 +1,13 @@
 <template>
     <ul v-if="reviews">
         <li v-for="r in reviews" :key="r._id" class="review">
-            <img v-if="r.pic" :src="r.pic" alt="Review pic" />
-            <img
-                v-else
-                src="https://res.cloudinary.com/dukumou2e/image/upload/v1557745360/breweries/lazy-src_zpkrwj.jpg"
-                alt="Beer"
-            />
+            <b-pic :src="r.pic ? r.pic : ''" alt="Review pic"></b-pic>
+
             <div class="review__info">
                 <div class="review__top-row">
                     <div>
                         <h3 v-if="r.reviewer">{{ r.reviewer.displayName || r.reviewer.name }}</h3>
+                        <h3 v-else>Phil</h3>
                         <p>{{ prettyDate(r.date || r.dateCreated) }}</p>
                     </div>
                     <b-rating :rating="r.rating" :size="16" :id="r._id"></b-rating>
@@ -37,14 +34,10 @@ export default {
 .review {
     padding: 20px;
     display: flex;
+    align-items: flex-start;
 
     @include breakpoint(m) {
         padding: 20px 0;
-    }
-
-    img {
-        height: 100px;
-        width: 100px;
     }
 
     &__info {
@@ -52,7 +45,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        margin-left: 10px;
+        padding: 8px 10px;
     }
 
     &__top-row {

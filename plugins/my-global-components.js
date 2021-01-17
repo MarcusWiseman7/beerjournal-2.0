@@ -1,14 +1,16 @@
 import Vue from 'vue';
 
-import BPopup from '@/components/BPopup';
-import BInput from '@/components/BInput';
 import BButton from '@/components/BButton';
+import BInput from '@/components/BInput';
+import BPic from '@/components/BPic';
+import BPopup from '@/components/BPopup';
 import BRating from '@/components/BRating';
 
 const components = {
-    BPopup,
-    BInput,
     BButton,
+    BInput,
+    BPic,
+    BPopup,
     BRating,
 };
 

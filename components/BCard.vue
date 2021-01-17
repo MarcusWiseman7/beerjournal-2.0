@@ -1,6 +1,8 @@
 <template>
     <nuxt-link v-if="item && item.hasOwnProperty('brewery')" :to="`/SingleBeer/${item._id}`" class="item">
-        <img :src="item.logo ? item.logo : item.brewery.logo" alt="logo" />
+        <img v-if="item.logo || item.brewery.logo" :src="item.logo || item.brewery.logo" alt="logo" />
+        <b-pic v-else></b-pic>
+        
         <div class="item__desc">
             <h3>{{ item.beerName }}</h3>
             <h5>{{ item.brewery.name }}</h5>

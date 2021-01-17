@@ -42,27 +42,34 @@ export const mutations = {
     toggle(state, item) {
         state[item] = !state[item];
     },
-    updateBeerList(state, beer) {
-        const indx = state.beers.findIndex(x => x._id == beer._id);
-        if (indx >= 0) state.beers.slice(indx, 1, beer);
-        else state.beers.push(beer);
+    updateBeerList(state, beers) {
+        beers.forEach(b => {
+            const indx = state.beers.findIndex(x => x._id == b._id);
+            if (indx >= 0) state.beers.slice(indx, 1, b);
+            else state.beers.push(b);
+        });
     },
     updateBreweryList(state, brewery) {
-        const indx = state.breweries.findIndex(x => x._id == brewery.id);
+        const indx = state.breweries.findIndex(x => x._id == brewery._id);
         if (indx >= 0) state.breweries.slice(indx, 1, brewery);
         else state.breweries.push(brewery);
+    },
+    updateReviewsList(state, reviews) {
+        reviews.forEach(r => {
+            const indx = state.reviews.findIndex(x => x._id == r._id);
+            if (indx == -1) state.reviews.push(r);
+        });
     },
 };
 
 export const actions = {
     async nuxtServerInit({ commit }, { app }) {
         await app.$axios
-            .$get('/api2/beers/allBeers')
+            .$get('/api2/beers/topBeers')
             .then(res => {
-                if (res && res.beers && res.breweries) {
-                    commit('setObj', { name: 'beers', obj: res.beers });
-                    commit('setObj', { name: 'breweries', obj: res.breweries });
-                    commit('setObj', { name: 'reviews', obj: res.reviews });
+                if (res && res.topBeers) {
+                    commit('updateReviewsList', res.reviews);
+                    commit('setObj', { name: 'beers', obj: res.topBeers });
                     commit('setObj', { name: 'topBeers', obj: res.topBeers });
                 }
             })
@@ -244,8 +251,8 @@ export const actions = {
             .then(res => {
                 if (res && res.beers && res.breweries) {
                     commit('setObj', { name: 'beers', obj: res.beers });
-                    commit('setObj', { name: 'breweries', obj: res.breweries });
-                    commit('setObj', { name: 'reviews', obj: res.reviews });
+                    // commit('setObj', { name: 'breweries', obj: res.breweries });
+                    // commit('setObj', { name: 'reviews', obj: res.reviews });
                     commit('setObj', { name: 'topBeers', obj: res.topBeers });
                 }
             })
@@ -258,9 +265,10 @@ export const actions = {
     },
     async getBeer({ commit }, id) {
         return await this.$axios
-            .$get(`/api2/beers/getBeer/${id}`)
+            .$get(`/api2/beers/singleBeer/${id}`)
             .then(res => {
-                commit('updateBeerList', res.data.beer);
+                commit('updateReviewsList', res.reviews);
+                commit('updateBeerList', [res.beer]);
             })
             .catch(err => {
                 console.warn('Get beer error :>> ', err);
@@ -271,31 +279,30 @@ export const actions = {
     },
     async getBrewery({ commit }, id) {
         return await this.$axios
-            .$get(`/api2/breweries/getBrewery/${id}`)
+            .$patch(`/api2/breweries/updateBreweryRating/${id}`)
             .then(res => {
-                commit('updateBreweryList', res.data.brewery);
+                commit('updateBeerList', res.beers);
+                commit('updateReviewsList', res.reviews);
+                commit('updateBreweryList', res.brewery);
             })
             .catch(err => {
-                console.warn('Get brewery error :>> ', err);
+                console.warn('Update brewery rating err :>> ', err);
             })
             .finally(() => {
                 return;
             });
-    },
-    async getReviewsForBeer({ commit }, id) {
-        commit('toggle', 'loading');
 
-        return await this.$axios
-            .$get('/api2/reviews/' + id)
-            .then(res => {
-                return res.data.reviews;
-            })
-            .catch(err => {
-                console.warn('Get reviews error :>> ', err);
-            })
-            .finally(() => {
-                commit('toggle', 'loading');
-            });
+        // return await this.$axios
+        //     .$get(`/api2/breweries/getBrewery/${id}`)
+        //     .then(res => {
+        //         commit('updateBreweryList', res.data.brewery);
+        //     })
+        //     .catch(err => {
+        //         console.warn('Get brewery error :>> ', err);
+        //     })
+        //     .finally(() => {
+        //         return;
+        //     });
     },
     async addReview({ commit }, params) {
         commit('toggle', 'loading');
@@ -304,7 +311,8 @@ export const actions = {
             .$post('/api2/reviews/addReview', params)
             .then(res => {
                 console.log('res :>> ', res);
-                commit('updateBeerList', res.data.beer);
+                commit('updateReviewsList', [res.review]);
+                commit('updateBeerList', [res.beer]);
                 commit('setObj', {
                     name: 'bMessage',
                     obj: { message: 'Review added', countdown: 4000 },

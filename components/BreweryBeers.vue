@@ -1,12 +1,8 @@
 <template>
     <ul v-if="beers">
         <nuxt-link v-for="b in beers" :key="b._id" :to="`/SingleBeer/${b._id}`" class="beer" tag="li">
-            <img v-if="b.logo || breweryLogo" :src="b.logo || breweryLogo" alt="Logo" />
-            <img
-                v-else
-                src="https://res.cloudinary.com/dukumou2e/image/upload/v1557745360/breweries/lazy-src_zpkrwj.jpg"
-                alt="Beer"
-            />
+            <b-pic :src="b.logo || breweryLogo ? b.logo || breweryLogo : ''" alt="Logo"></b-pic>
+
             <div class="beer__info">
                 <div class="beer__top-row">
                     <div>

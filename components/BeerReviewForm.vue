@@ -134,7 +134,7 @@ export default {
 
             if (this.uploadedFile) {
                 await this.addPic();
-                if (!this.newRating.picURL) return;
+                if (!this.newRating.pic) return;
             }
 
             this.newRating.beer = this.beer._id;

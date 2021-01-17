@@ -5,9 +5,14 @@
         </div>
         <div class="beer__title-row">
             <div class="beer__title-row--half">
-                <nuxt-link :to="`/SingleBrewery/${beer.brewery._id}`">
-                    <img :src="beer.logo || beer.brewery.logo" alt="Logo" />
-                </nuxt-link>
+                <div class="beer__logo">
+                    <nuxt-link :to="`/SingleBrewery/${beer.brewery._id}`">
+                        <b-pic
+                            :src="beer.logo || beer.brewery.logo ? beer.logo || beer.brewery.logo : ''"
+                            alt="Logo"
+                        ></b-pic>
+                    </nuxt-link>
+                </div>
             </div>
             <div class="beer__info beer__title-row--half">
                 <nuxt-link :to="`/SingleBrewery/${beer.brewery._id}`">
@@ -51,9 +56,6 @@ export default {
     components: { BeerReviews },
     async asyncData({ params, store, redirect }) {
         if (!params.id) return redirect('/');
-        if (!store.getters.allBeers || !store.getters.allBeers.length > 0) {
-            await store.dispatch('getAllBeers');
-        }
         if (!store.getters.allBeers.hasOwnProperty(params.id)) {
             await store.dispatch('getBeer', params.id);
         }
@@ -113,6 +115,8 @@ export default {
 
             &:first-child {
                 padding-right: 10px;
+                display: flex;
+                justify-content: flex-end;
             }
 
             &:last-child {
