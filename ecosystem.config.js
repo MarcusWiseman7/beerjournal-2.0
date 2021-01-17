@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'beerjournal',
+            name: 'brewfoam',
             script: 'npm',
             args: 'start',
             env: {
