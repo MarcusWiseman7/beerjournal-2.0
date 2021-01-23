@@ -34,7 +34,7 @@ export default {
         closeIcon: { type: Boolean, default: true },
         title: { type: String, required: false },
         text: { type: String, required: false },
-        modifiers: { type: Array, default: () => null },
+        modifiers: { type: Array, default: () => [] },
     },
     mixins: [helpers],
     data() {
@@ -45,7 +45,6 @@ export default {
     },
     computed: {
         modifierClass() {
-            if (!this.modifiers) return '';
             let newClass = '';
             this.modifiers.forEach(c => {
                 newClass += ` popup--${c}`;
@@ -97,6 +96,10 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
     height: auto;
     border-radius: 16px;
+
+    &--autoWidth {
+        width: auto;
+    }
 
     &--wholeHeight {
         height: 100%;

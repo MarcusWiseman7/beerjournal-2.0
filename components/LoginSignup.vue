@@ -1,11 +1,18 @@
 <template>
     <div class="auth">
         <div v-if="step == 1" class="auth__inputs">
-            <b-input label="Email" :error="errors.email || emailExists" :errorMsg="emailErrorMsg">
+            <b-input
+                label="Email"
+                labelFor="username"
+                :error="errors.email"
+                :errorMsg="emailErrorMsg"
+                :key="'username'"
+            >
                 <input
                     type="text"
                     autofocus
                     autocomplete="username"
+                    id="username"
                     maxlength="60"
                     v-model="contact.email"
                     placeholder="Enter your email..."
@@ -14,9 +21,16 @@
                     @keypress.enter="onClick"
                 />
             </b-input>
-            <div :class="{ hide: !showPassword }">
-                <b-input label="Password" :error="errors.password" errorMsg="Min 6 characters">
+            <div class="auth__password" :class="{ hide: !showPassword }">
+                <b-input
+                    label="Password"
+                    labelFor="password"
+                    :error="errors.password"
+                    errorMsg="Min 6 characters"
+                    :key="'password'"
+                >
                     <input
+                        v-if="!isSignup"
                         :type="passwordInputType ? 'password' : 'text'"
                         placeholder="Enter your password..."
                         ref="passwordInput"
@@ -27,27 +41,50 @@
                         @input="recheckError('password')"
                         @keypress.enter="onClick"
                     />
+                    <input
+                        v-else
+                        :type="passwordInputType ? 'password' : 'text'"
+                        placeholder="Enter your new password..."
+                        ref="passwordInput"
+                        autocomplete="new-password"
+                        v-model="contact.password"
+                        id="password"
+                        @blur="checkError('password')"
+                        @input="recheckError('password')"
+                        @keypress.enter="onClick"
+                    />
                     <img
                         v-if="passwordInputType"
                         class="eye"
+                        :class="{ 'eye--error': errors.password }"
                         src="@/assets/icons/eye-closed.svg"
                         alt="Hide"
                         @click="passwordInputType = false"
                     />
-                    <img v-else class="eye" src="@/assets/icons/eye.svg" alt="Show" @click="passwordInputType = true" />
+                    <img
+                        v-else
+                        class="eye"
+                        :class="{ 'eye--error': errors.password }"
+                        src="@/assets/icons/eye.svg"
+                        alt="Show"
+                        @click="passwordInputType = true"
+                    />
                 </b-input>
             </div>
         </div>
         <div v-if="step == 2" class="auth__inputs">
             <b-input
                 label="Display name"
+                labelFor="displayname"
                 :error="errors.displayName || displayNameExists"
                 :errorMsg="displayNameErrorMsg"
+                :key="'displayname'"
             >
                 <input
                     type="text"
                     maxlength="60"
                     v-model="contact.displayName"
+                    id="displayname"
                     placeholder="Enter a name to use..."
                     @blur="checkError('displayName')"
                     @input="recheckError('displayName')"
@@ -63,6 +100,8 @@
 </template>
 
 <script>
+import debounce from '@/debounce';
+
 export default {
     name: 'LoginSignup',
     data() {
@@ -110,37 +149,41 @@ export default {
                         return this.success.email && this.success.password;
                     }
                 case 2:
-                    return this.success.displayName;
+                    return this.success.displayName && !this.displayNameExists;
             }
         },
         isSignup() {
             return this.$route.name == 'SignUp';
         },
         btnText() {
-            if (!this.isSignup) return 'Enter';
-            else {
-                switch (this.step) {
-                    case 1:
-                        return 'Continue';
-                    default:
-                        return 'Enter';
-                }
+            if (!this.isSignup) {
+                return this.formOK && !this.emailExists ? 'Sign up' : 'Enter';
+            } else {
+                return this.step == 1 ? 'Continue' : 'Enter';
             }
         },
     },
     methods: {
         onClick() {
-            if (!this.isSignup) this.tryLogin();
-            else {
+            if (!this.isSignup) {
+                if (this.step == 1 && !this.emailExists) this.goSignup();
+                else this.tryLogin();
+            } else {
                 switch (this.step) {
                     case 1:
-                        this.checkEmail();
+                        if (this.emailExists) this.tryLogin();
+                        else this.step++;
                         break;
                     case 2:
-                        this.checkDisplayName();
+                        this.addUser();
                         break;
                 }
             }
+        },
+        goSignup() {
+            this.$store.commit('setObj', { name: 'authContact', obj: this.contact });
+            this.$store.commit('toggle', 'loginPopup');
+            this.$router.push({ name: 'SignUp' });
         },
         checkError(err) {
             this.errors[err] = this.contact[err].match(this.regex[err]) === null;
@@ -150,6 +193,13 @@ export default {
         recheckError(err) {
             if (this.errors[err]) this.checkError(err);
             else this.checkSuccess(err);
+
+            if (['email', 'displayName'].includes(err)) {
+                setTimeout(() => {
+                    if (err == 'email') this.checkEmail();
+                    else this.checkDisplayName();
+                }, 10);
+            }
         },
         checkSuccess(success) {
             this.success[success] = this.contact[success].match(this.regex[success]) !== null;
@@ -172,26 +222,18 @@ export default {
                 else this.showPasswordNow();
             } catch (err) {}
         },
-        checkEmail() {
+        checkEmail: debounce(function() {
+            if (!this.success.email) return;
             this.$store.dispatch('checkDB', { email: this.contact.email }).then(res => {
-                if (res.statusCode < 0) {
-                    this.emailExists = true;
-                } else {
-                    this.emailExists = false;
-                    this.step++;
-                }
+                this.emailExists = res.statusCode < 0;
             });
-        },
-        checkDisplayName() {
+        }, 200),
+        checkDisplayName: debounce(function() {
+            if (!this.success.displayName) return;
             this.$store.dispatch('checkDB', { displayName: this.contact.displayName }).then(res => {
-                if (res.statusCode < 0) {
-                    this.displayNameExists = true;
-                } else {
-                    this.displayNameExists = false;
-                    this.addUser();
-                }
+                this.displayNameExists = res.statusCode < 0;
             });
-        },
+        }, 200),
         addUser() {
             if (!this.formOK) return;
             this.$store.dispatch('addUser', this.contact);
@@ -199,23 +241,37 @@ export default {
     },
     created() {
         if (this.$route.name == 'SignUp') this.showPassword = true;
+        if (this.$store.state.authContact) {
+            this.contact = Object.assign({}, this.contact, this.$store.state.authContact);
+            this.recheckError('email');
+        }
     },
 };
 </script>
 
 <style lang="scss" scoped>
 .auth {
+    margin: 20px 0;
+
     &__inputs {
         margin: 20px 0 40px 0;
         min-width: 300px;
+    }
+
+    &__password {
+        margin-top: 10px;
     }
 }
 
 .eye {
     position: absolute;
     right: 12px;
-    top: 10px;
+    top: 9px;
     cursor: pointer;
+
+    &--error {
+        right: 30px;
+    }
 }
 
 .hide {

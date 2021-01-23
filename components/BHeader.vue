@@ -8,7 +8,12 @@
             <b-button v-if="!myId" group="main" modifier="outline" @clicked="$store.commit('toggle', 'loginPopup')"
                 >Login</b-button
             >
-            <b-button v-if="!myId" group="main" modifier="outline" @clicked="$router.push({ name: 'SignUp' })"
+            <b-button
+                v-if="!myId"
+                group="main"
+                modifier="outline"
+                class="b-header__actions--last"
+                @clicked="$router.push({ name: 'SignUp' })"
                 >Create account</b-button
             >
             <b-button v-else group="main" modifier="outline" @clicked="$store.dispatch('logout')">Logout</b-button>
@@ -69,6 +74,10 @@ export default {
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+
+        &--last {
+            margin-left: 10px !important;
+        }
 
         @include breakpoint(m) {
             width: 30%;

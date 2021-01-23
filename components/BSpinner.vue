@@ -12,12 +12,18 @@ export default {
 
 <style lang="scss">
 .spinner-wrap {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: #282c2dad;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(var(--vh, 1vh) * 100);
     width: 100%;
+    z-index: 99;
 }
 
 .spinner,

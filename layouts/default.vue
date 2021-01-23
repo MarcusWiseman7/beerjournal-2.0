@@ -8,6 +8,7 @@
             v-if="loginPopup"
             title="Login"
             text="Enter your email and password to login"
+            :modifiers="['autoWidth']"
             @close="$store.commit('toggle', 'loginPopup')"
         >
             <template v-slot:body>
@@ -31,7 +32,7 @@ import BFooter from '@/components/BFooter';
 import LoginSignup from '@/components/LoginSignup';
 
 export default {
-    components: { BSpinner, BHeader, BFooter },
+    components: { BSpinner, BHeader, BFooter, LoginSignup },
     computed: {
         ...mapState(['loading', 'bMessage', 'loginPopup']),
     },

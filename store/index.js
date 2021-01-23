@@ -14,6 +14,7 @@ export const state = () => ({
     isPhoneSize: true,
     searchResults: null,
     searchQuery: '',
+    authContact: null,
 });
 
 export const getters = {
@@ -168,8 +169,6 @@ export const actions = {
             });
     },
     async checkDB({ commit }, params) {
-        commit('toggle', 'loading');
-
         return await this.$axios
             .$post('/api/users/checkDB', params)
             .then(res => {
@@ -183,7 +182,6 @@ export const actions = {
                 });
             })
             .finally(() => {
-                commit('toggle', 'loading');
                 return;
             });
     },
@@ -244,6 +242,28 @@ export const actions = {
         const arr = state.beers.filter(x => x.beerName.includes(q) || x.brewery.name.includes(q));
         commit('setObj', { name: 'searchQuery', obj: q });
         commit('setObj', { name: 'searchResults', obj: arr });
+    },
+    async searchDB({ commit }, q) {
+        try {
+            if (!q || !q.length) {
+                commit('setObj', { name: 'searchQuery', obj: '' });
+                return commit('setObj', { name: 'searchResults', obj: null });
+            }
+            return await this.$axios
+                .$get('/api2/beers/search/' + q)
+                .then(res => {
+                    commit('setObj', { name: 'searchQuery', obj: q });
+                    commit('setObj', { name: 'searchResults', obj: res.results });
+                })
+                .catch(err => {
+                    console.log('Search err :>> ', err);
+                })
+                .finally(() => {
+                    return;
+                });
+        } catch (err) {
+            console.warn('Search DB err :>> ', err);
+        }
     },
     async getAllBeers({ commit }) {
         await this.$axios

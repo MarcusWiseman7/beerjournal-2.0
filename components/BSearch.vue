@@ -63,8 +63,10 @@ export default {
         },
     },
     watch: {
-        query: debounce(function(q) {
-            this.$store.dispatch('filterBeers', q);
+        query: debounce(async function(q) {
+            this.loading = true;
+            await this.$store.dispatch('searchDB', q);
+            this.loading = false;
         }, 400),
     },
     methods: {

@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <b-button class="button" group="main" modifier="outline" @clicked="reviewing = true">Add review</b-button>
+            <b-button class="button" group="main" modifier="outline" @clicked="checkIfLogged">Add review</b-button>
 
             <beer-reviews :reviews="reviews"></beer-reviews>
         </div>
@@ -69,7 +69,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['allBeers']),
+        ...mapGetters(['allBeers', 'myId']),
         id() {
             return this.$route.params.id;
         },
@@ -78,6 +78,13 @@ export default {
         goBack() {
             if (this.reviewing) this.reviewing = false;
             else this.goBackOrIndex();
+        },
+        checkIfLogged() {
+            if (!this.myId) {
+                this.$store.commit('toggle', 'loginPopup');
+            } else {
+                this.reviewing = true;
+            }
         },
     },
     created() {

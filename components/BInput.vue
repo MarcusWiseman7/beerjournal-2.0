@@ -11,7 +11,7 @@
                 {
                     'input--error': error,
                     input: type == 'textarea',
-                    'input--with-label': label,
+                    'input--with-label': !!label,
                     'state-visible': error,
                 },
             ]"
@@ -20,21 +20,21 @@
             <slot></slot>
 
             <!-- Select -->
-            <ul
+            <!-- <ul
                 v-if="type == 'select'"
                 class="select-wrapper"
                 :class="{ selecting: selecting }"
                 @click="selecting = !selecting"
-            >
-                <!-- Select first row -->
-                <li v-if="selected" class="select__header select__header--selected" @click="$emit('select-desc')">
+            > -->
+            <!-- Select first row -->
+            <!-- <li v-if="selected" class="select__header select__header--selected" @click="$emit('select-desc')">
                     {{ selected.t ? selected.t : '' }}
                     <slot name="selectSelected"></slot>
                 </li>
-                <li v-else class="select__header" v-html="selectDescription" @click="$emit('select-desc')"></li>
+                <li v-else class="select__header" v-html="selectDescription" @click="$emit('select-desc')"></li> -->
 
-                <!-- Open select - options -->
-                <ul v-if="selecting" class="select__options">
+            <!-- Open select - options -->
+            <!-- <ul v-if="selecting" class="select__options">
                     <slot name="selectLi"></slot>
                     <li
                         class="select__option"
@@ -44,7 +44,7 @@
                         v-html="item.t"
                     ></li>
                 </ul>
-            </ul>
+            </ul> -->
 
             <!-- Search states-->
             <div v-if="type == 'search-area'" class="search-area__state">
@@ -89,10 +89,8 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 export default {
-    name: 'GInput',
+    name: 'BInput',
     props: {
         type: { type: String, default: 'input' },
         label: { type: String, required: false },
@@ -101,15 +99,15 @@ export default {
         error: { type: Boolean, default: false },
         searchValid: { type: Boolean, default: false },
         loading: { type: Boolean, default: false },
-        items: { type: Array, default: () => [] },
-        selectDescription: { type: String, default: 'Select' },
-        selected: { type: Object, default: () => null },
+        // items: { type: Array, default: () => [] },
+        // selectDescription: { type: String, default: 'Select' },
+        // selected: { type: Object, default: () => null },
     },
-    data() {
-        return {
-            selecting: false,
-        };
-    },
+    // data() {
+    //     return {
+    //         selecting: false,
+    //     };
+    // },
 };
 </script>
 
@@ -130,6 +128,8 @@ label {
 
 .input-wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column;
     padding: 0;
 }
 
