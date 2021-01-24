@@ -15,6 +15,7 @@
                 v-on:input="query = $event.target.value"
                 id="search"
                 class="search"
+                maxlength="50"
             />
             <div class="search-area__state">
                 <img

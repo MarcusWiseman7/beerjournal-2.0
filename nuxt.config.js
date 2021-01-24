@@ -3,15 +3,15 @@ const pkg = require('./package');
 export default {
     // Global page headers (https://go.nuxtjs.dev/config-head)
     head: {
-        title: 'beerjournal-2.0',
+        title: 'brewfoam',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { name: 'theme-color', content: '#424242' },
-            { name: 'apple-mobile-web-app-status-bar-style', content: '#424242' },
+            { name: 'theme-color', content: 'rgba(0, 0, 0, 0.6)' },
+            { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
             { hid: 'description', name: 'description', content: pkg.description },
         ],
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
+        link: [{ rel: 'icon', type: 'image/x-icon', href: '/beer.svg' }],
     },
 
     loading: { color: '#ffa000', height: '4px' },

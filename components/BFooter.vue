@@ -24,7 +24,6 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 100vw;
     background-color: #fff;
     z-index: 1;
 

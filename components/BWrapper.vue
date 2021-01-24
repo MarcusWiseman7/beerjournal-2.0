@@ -9,7 +9,8 @@
                 <b-card v-for="(item, i) in items.slice(0, maxResults)" :key="i" :item="item"></b-card>
             </div>
             <div v-else-if="which == 'searchResults'" class="wrapper__no-results">
-                <h3>Sorry, no results for {{ $store.state.searchQuery }}...</h3>
+                <h3>Sorry, no results for "{{ $store.state.searchQuery }}"...</h3>
+                <b-button group="main" modifier="outline" @clicked="checkIfLogged">Add new beer</b-button>
             </div>
             <div v-if="which != 'topBeers' && items && items.length > maxResults" class="wrapper__actions">
                 <b-button group="quick" modifier="outline" @clicked="maxResults += 6">Show more</b-button>
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import BCard from '@/components/BCard';
 
 export default {
@@ -39,8 +41,15 @@ export default {
         },
     },
     computed: {
+        ...mapGetters(['myId']),
         title() {
             return this.which == 'topBeers' ? 'Top beer picks' : this.which == 'searchResults' ? 'Search results' : '';
+        },
+    },
+    methods: {
+        checkIfLogged() {
+            if (this.myId) this.$router.push({ name: 'AddBeer' });
+            else this.$store.commit('toggle', 'loginPopup');
         },
     },
 };
@@ -53,6 +62,9 @@ export default {
     padding: 0 20px;
 
     &__container {
+        overflow: hidden;
+        word-wrap: break-word;
+
         @include breakpoint(d) {
             width: 80%;
         }
@@ -71,8 +83,15 @@ export default {
 
     &__no-results {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-content: center;
         margin: 60px 0;
+        overflow: hidden;
+        word-wrap: break-word;
+
+        h3 {
+            margin-bottom: 8px;
+        }
     }
 
     &__actions {

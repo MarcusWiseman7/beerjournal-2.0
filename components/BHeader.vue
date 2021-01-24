@@ -1,7 +1,7 @@
 <template>
-    <div class="b-header" :style="'height:' + maxHeight">
+    <div class="b-header">
         <nuxt-link to="/" class="b-header__title">
-            <span>BeerJournal</span>
+            <span>BrewFoam</span>
             <img src="@/assets/icons/beer.svg" alt="beer" />
         </nuxt-link>
         <div class="b-header__actions">
@@ -29,22 +29,23 @@ export default {
     computed: {
         ...mapState(['isSmallScreen']),
         ...mapGetters(['myId']),
-        maxHeight() {
-            return this.isSmallScreen || this.$route.name !== 'index' ? '160px' : '400px';
-        },
     },
 };
 </script>
 
 <style lang="scss" scoped>
 .b-header {
+    height: 160px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-        url('https://res.cloudinary.com/dukumou2e/image/upload/v1557745360/breweries/lazy-src_zpkrwj.jpg');
-    background-position: center top;
-    background-size: contain;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    background-color: #fff;
 
     @include breakpoint(m) {
         padding: 40px;
@@ -61,7 +62,7 @@ export default {
             color: $maincolor;
             font-size: 60px;
             font-weight: 300;
-            margin-right: 16px;
+            margin-right: 6px;
         }
 
         img {
@@ -74,6 +75,7 @@ export default {
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+        padding: 0 20px;
 
         &--last {
             margin-left: 10px !important;

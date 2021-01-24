@@ -84,7 +84,7 @@ export const actions = {
     initApp({ commit }) {
         [
             ['isTouchScreen', !!('ontouchstart' in window || navigator.maxTouchPoints)],
-            ['isSmallScreen', !!(window.innerWidth < 400)],
+            ['isSmallScreen', !!(window.innerWidth < 420)],
             ['isPhoneSize', !!(window.innerWidth < 600)],
         ].forEach(x => commit('setObj', { name: x[0], obj: x[1] }));
     },
@@ -294,6 +294,28 @@ export const actions = {
                 console.warn('Get beer error :>> ', err);
             })
             .finally(() => {
+                return;
+            });
+    },
+    async addNewBeer({ commit }, params) {
+        commit('toggle', 'loading');
+
+        return await this.$axios
+            .$post('/api2/beers/addNewBeer', params)
+            .then(res => {
+                commit('setObj', {
+                    name: 'bMessage',
+                    obj: {
+                        message: 'Added your beer! After review it will be searchable on BrewFoam!',
+                        countdown: 6000,
+                    },
+                });
+            })
+            .catch(err => {
+                console.warn('Add new beer error :>> ', err);
+            })
+            .finally(() => {
+                commit('toggle', 'loading');
                 return;
             });
     },
