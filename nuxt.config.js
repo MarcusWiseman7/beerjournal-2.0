@@ -1,4 +1,5 @@
 const pkg = require('./package');
+const url = process.env.NODE_;
 
 export default {
     // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -52,15 +53,15 @@ export default {
     },
     proxy: {
         '/api/': {
-            target: 'https://mdw-be.com',
+            target: 'https://mdw-be.com:8080',
             pathRewrite: {
                 '^/api/': '/',
             },
         },
         '/api2/': {
-            target: 'https://mdw-be.com',
+            target: 'https://mdw-be.com:8080',
             pathRewrite: {
-                '^/api2/': '/beerjournal/',
+                '^/api2/': '/brewfoam/',
             },
         },
     },
