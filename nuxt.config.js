@@ -53,13 +53,13 @@ export default {
     },
     proxy: {
         '/api/': {
-            target: 'https://mdw-be.com:8080',
+            target: 'http://localhost:8080',
             pathRewrite: {
                 '^/api/': '/',
             },
         },
         '/api2/': {
-            target: 'https://mdw-be.com:8080',
+            target: 'http://localhost:8080',
             pathRewrite: {
                 '^/api2/': '/brewfoam/',
             },
