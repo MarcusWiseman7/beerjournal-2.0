@@ -1,7 +1,7 @@
 {
-    "name": "beerjournal-2.0",
+    "name": "brewfoam",
     "version": "1.0.0",
-    "description": "Social beer journal PWA built with the MEVN stack",
+    "description": "Social beer journal, search, find and save your favorite beers",
     "author": "Marcus Wiseman",
     "private": true,
     "scripts": {

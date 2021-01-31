@@ -52,13 +52,13 @@ export default {
     },
     proxy: {
         '/api/': {
-            target: 'http://localhost:8080',
+            target: 'https://mdw-be.com',
             pathRewrite: {
                 '^/api/': '/',
             },
         },
         '/api2/': {
-            target: 'http://localhost:8080',
+            target: 'https://mdw-be.com',
             pathRewrite: {
                 '^/api2/': '/beerjournal/',
             },
