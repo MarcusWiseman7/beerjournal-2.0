@@ -321,7 +321,7 @@ export const actions = {
     },
     async getBrewery({ commit }, id) {
         return await this.$axios
-            .$patch(`/api2/breweries/updateBreweryRating/${id}`)
+            .$get(`/api2/breweries/getBrewery/${id}`)
             .then(res => {
                 commit('updateBeerList', res.beers);
                 commit('updateReviewsList', res.reviews);
@@ -333,18 +333,6 @@ export const actions = {
             .finally(() => {
                 return;
             });
-
-        // return await this.$axios
-        //     .$get(`/api2/breweries/getBrewery/${id}`)
-        //     .then(res => {
-        //         commit('updateBreweryList', res.data.brewery);
-        //     })
-        //     .catch(err => {
-        //         console.warn('Get brewery error :>> ', err);
-        //     })
-        //     .finally(() => {
-        //         return;
-        //     });
     },
     async addReview({ commit }, params) {
         commit('toggle', 'loading');
