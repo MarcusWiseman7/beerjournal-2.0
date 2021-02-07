@@ -3,9 +3,12 @@
         <b-search class="search"></b-search>
         <b-wrapper v-if="searchResults" which="searchResults" :items="searchResults"></b-wrapper>
         <b-wrapper which="topBeers" :items="topBeers"></b-wrapper>
-        <b-button v-if="marcus" group="main" modifier="outline" @clicked="$store.dispatch('normalizeNamesInDB')"
-            >Normalize names</b-button
-        >
+        <div v-if="marcus" class="home__actions">
+            <b-button group="main" modifier="outline" @clicked="$store.dispatch('generalDBUpdate')">Update DB</b-button>
+            <b-button group="main" modifier="outline" @clicked="$store.dispatch('normalizeNamesInDB')"
+                >Normalize names</b-button
+            >
+        </div>
     </div>
 </template>
 
@@ -30,6 +33,15 @@ export default {
 
     @include breakpoint(m) {
         margin: 40px 0;
+    }
+}
+
+.home {
+    &__actions {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 </style>

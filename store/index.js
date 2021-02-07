@@ -373,4 +373,14 @@ export const actions = {
                 console.warn('Axios catch err :>> ', err);
             });
     },
+    generalDBUpdate({}) {
+        this.$axios
+            .$patch('/api2/beers/updateDB')
+            .then(res => {
+                console.log('res :>> ', res);
+            })
+            .catch(err => {
+                console.warn('Axios catch err :>> ', err);
+            });
+    },
 };
