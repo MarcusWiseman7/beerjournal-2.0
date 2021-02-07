@@ -23,6 +23,7 @@
             </b-input>
             <div class="auth__password" :class="{ hide: !showPassword }">
                 <b-input
+                    v-show="!iForgot"
                     label="Password"
                     labelFor="password"
                     :error="errors.password"
@@ -70,6 +71,10 @@
                         @click="passwordInputType = true"
                     />
                 </b-input>
+
+                <div class="auth__forgot" @click="iForgot = true">
+                    <span>Forgot password?</span>
+                </div>
             </div>
         </div>
         <div v-if="step == 2" class="auth__inputs">
@@ -131,6 +136,7 @@ export default {
                 displayName: /^.{3,}$/,
             },
             step: 1,
+            iForgot: false,
         };
     },
     computed: {
@@ -143,7 +149,7 @@ export default {
         formOK() {
             switch (this.step) {
                 case 1:
-                    if (!this.showPassword) {
+                    if (!this.showPassword || this.iForgot) {
                         return this.success.email;
                     } else {
                         return this.success.email && this.success.password;
@@ -157,6 +163,7 @@ export default {
         },
         btnText() {
             if (!this.isSignup) {
+                if (this.iForgot) return 'Reset password';
                 return this.formOK && !this.emailExists ? 'Sign up' : 'Enter';
             } else {
                 return this.step == 1 ? 'Continue' : 'Enter';
@@ -165,7 +172,9 @@ export default {
     },
     methods: {
         onClick() {
-            if (!this.isSignup) {
+            if (this.iForgot) {
+                this.$store.dispatch('forgotPassword');
+            } else if (!this.isSignup) {
                 if (this.step == 1 && !this.emailExists) this.goSignup();
                 else this.tryLogin();
             } else {
@@ -260,6 +269,14 @@ export default {
 
     &__password {
         margin-top: 10px;
+    }
+
+    &__forgot {
+        color: #999;
+        font-size: 12px;
+        padding: 6px 12px;
+        margin: 6px 0 -12px 0;
+        cursor: pointer;
     }
 }
 

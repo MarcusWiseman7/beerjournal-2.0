@@ -17,7 +17,6 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     right: 0;
@@ -26,6 +25,7 @@ footer {
     align-items: center;
     background-color: #fff;
     z-index: 1;
+    flex-shrink: 0;
 
     span {
         margin: 24px 0;

@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <b-header></b-header>
-        <Nuxt />
+        <div class="content">
+            <Nuxt />
+        </div>
         <b-footer></b-footer>
 
         <b-popup

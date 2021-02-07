@@ -37,6 +37,7 @@ export default {
     margin: 6px;
     border-radius: 8px;
     width: calc(50% - 12px);
+    min-height: 120px;
 
     img {
         height: 50px;

@@ -10,6 +10,7 @@ export const state = () => ({
     bMessage: null,
     loginPopup: false,
     isSmallScreen: true,
+    isVerySmallScreen: false,
     isTouchScreen: true,
     isPhoneSize: true,
     searchResults: null,
@@ -21,6 +22,7 @@ export const getters = {
     darkMode: state => (state.auth.loggedIn ? state.auth.user.darkMode : false),
     myProfile: state => (state.auth.loggedIn ? state.auth.user : null),
     myId: state => (state.auth.loggedIn ? state.auth.user._id : null),
+    marcus: state => state.auth.loggedIn && state.auth.user.email == 'md.wiseman@hotmail.com',
     allBeers: state => {
         return state.beers.reduce((acc, cur) => {
             acc[cur._id] = cur;
@@ -84,6 +86,7 @@ export const actions = {
     initApp({ commit }) {
         [
             ['isTouchScreen', !!('ontouchstart' in window || navigator.maxTouchPoints)],
+            ['isVerySmallScreen', !!(window.innerWidth < 390)],
             ['isSmallScreen', !!(window.innerWidth < 420)],
             ['isPhoneSize', !!(window.innerWidth < 600)],
         ].forEach(x => commit('setObj', { name: x[0], obj: x[1] }));
@@ -358,6 +361,16 @@ export const actions = {
             .finally(() => {
                 commit('toggle', 'loading');
                 return;
+            });
+    },
+    normalizeNamesInDB({}) {
+        this.$axios
+            .$patch('/api2/beers/normalizeNames')
+            .then(res => {
+                console.log('res :>> ', res);
+            })
+            .catch(err => {
+                console.warn('Axios catch err :>> ', err);
             });
     },
 };

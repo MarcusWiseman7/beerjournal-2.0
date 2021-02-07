@@ -43,7 +43,7 @@ export default {
     computed: {
         ...mapGetters(['myId']),
         title() {
-            return this.which == 'topBeers' ? 'Top beer picks' : this.which == 'searchResults' ? 'Search results' : '';
+            return this.which == 'topBeers' ? 'Top picks' : this.which == 'searchResults' ? 'Search results' : '';
         },
     },
     methods: {
