@@ -8,10 +8,10 @@
 
         <b-popup
             v-if="loginPopup"
-            title="Login"
-            text="Enter your email and password to login"
+            :title="loginPopupObj.title"
+            :text="loginPopupObj.text"
             :modifiers="['autoWidth']"
-            @close="$store.commit('toggle', 'loginPopup')"
+            @close="closeLoginPopup"
         >
             <template v-slot:body>
                 <login-signup></login-signup>
@@ -36,7 +36,16 @@ import LoginSignup from '@/components/LoginSignup';
 export default {
     components: { BSpinner, BHeader, BFooter, LoginSignup },
     computed: {
-        ...mapState(['loading', 'bMessage', 'loginPopup']),
+        ...mapState(['loading', 'bMessage', 'loginPopup', 'loginPopupObj']),
+    },
+    methods: {
+        closeLoginPopup() {
+            this.$store.commit('toggle', 'loginPopup');
+            this.$store.commit('setObj', {
+                name: 'loginPopupObj',
+                obj: { title: 'Login', text: 'Enter your email and password to login' },
+            });
+        },
     },
     mounted() {
         this.$store.dispatch('initApp');

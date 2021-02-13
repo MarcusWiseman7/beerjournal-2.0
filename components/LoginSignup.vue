@@ -72,7 +72,7 @@
                     />
                 </b-input>
 
-                <div class="auth__forgot" @click="iForgot = true">
+                <div v-if="!iForgot" class="auth__forgot" @click="goIforgot">
                     <span>Forgot password?</span>
                 </div>
             </div>
@@ -171,9 +171,16 @@ export default {
         },
     },
     methods: {
+        goIforgot() {
+            this.$store.commit('setObj', {
+                name: 'loginPopupObj',
+                obj: { title: 'Reset Password', text: 'Send an email to reset my password' },
+            });
+            this.iForgot = true;
+        },
         onClick() {
             if (this.iForgot) {
-                this.$store.dispatch('forgotPassword');
+                this.$store.dispatch('forgotPassword', this.contact.email);
             } else if (!this.isSignup) {
                 if (this.step == 1 && !this.emailExists) this.goSignup();
                 else this.tryLogin();
@@ -229,7 +236,9 @@ export default {
 
                 if (result && result.statusCode > 0) this.$router.replace('/');
                 else this.showPasswordNow();
-            } catch (err) {}
+            } catch (err) {
+                console.warn('Login error :>> ', err);
+            }
         },
         checkEmail: debounce(function() {
             if (!this.success.email) return;

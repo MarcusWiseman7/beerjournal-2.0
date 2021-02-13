@@ -9,6 +9,7 @@ export const state = () => ({
     breweryInfo: {},
     bMessage: null,
     loginPopup: false,
+    loginPopupObj: { title: 'Login', text: 'Enter your email and password to login' },
     isSmallScreen: true,
     isVerySmallScreen: false,
     isTouchScreen: true,
@@ -105,7 +106,9 @@ export const actions = {
                         if (state.loginPopup) commit('toggle', 'loginPopup');
                         commit('setObj', {
                             name: 'bMessage',
-                            obj: { message: `Welcome back, ${getters.myProfile.displayName}!` },
+                            obj: {
+                                message: `Welcome back, ${getters.myProfile.displayName || getters.myProfile.name}!`,
+                            },
                         });
                     }
                 }, 0);
@@ -168,7 +171,12 @@ export const actions = {
                 });
             })
             .finally(() => {
+                commit('toggle', 'loginPopup');
                 commit('toggle', 'loading');
+                commit('setObj', {
+                    name: 'loginPopupObj',
+                    obj: { title: 'Login', text: 'Enter your email and password to login' },
+                });
             });
     },
     async checkDB({ commit }, params) {
