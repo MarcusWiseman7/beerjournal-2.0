@@ -151,9 +151,10 @@ export const actions = {
     forgotPassword({ commit, getters }, email) {
         if (getters.myId) return;
         commit('toggle', 'loading');
+        const baseURL = process.env.NODE_ENV == 'production' ? 'https://brewfoam.com' : 'http://localhost:3000';
 
         this.$axios
-            .$post('/api/users/forgotPassword', { email })
+            .$post('/api/users/forgotPassword', { email, baseURL })
             .then(() => {
                 commit('setObj', {
                     name: 'bMessage',
