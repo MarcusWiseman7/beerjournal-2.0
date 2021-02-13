@@ -1,0 +1,13 @@
+.dark-mode {
+    background: #fff linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+
+    input,
+    .input,
+    .input::before {
+        background-color: transparent !important;
+    }
+
+    .popup__container {
+        background: #fff linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)) !important;
+    }
+}
