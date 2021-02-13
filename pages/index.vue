@@ -3,7 +3,7 @@
         <b-search class="search"></b-search>
         <b-wrapper v-if="searchResults" which="searchResults" :items="searchResults"></b-wrapper>
         <b-wrapper which="topBeers" :items="topBeers"></b-wrapper>
-        <div class="home__actions">
+        <div v-if="marcus" class="home__actions">
             <b-button group="main" modifier="outline" @clicked="$store.dispatch('generalDBUpdate')">Update DB</b-button>
             <b-button group="main" modifier="outline" @clicked="$store.dispatch('normalizeNamesInDB')"
                 >Normalize names</b-button
