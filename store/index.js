@@ -17,6 +17,7 @@ export const state = () => ({
     searchResults: null,
     searchQuery: '',
     authContact: null,
+    darkMode: false,
 });
 
 export const getters = {
@@ -46,6 +47,9 @@ export const mutations = {
     toggle(state, item) {
         state[item] = !state[item];
     },
+    setDarkMode(state, dm) {
+        state.darkMode = dm;
+    },
     updateBeerList(state, beers) {
         beers.forEach(b => {
             const indx = state.beers.findIndex(x => x._id == b._id);
@@ -67,7 +71,11 @@ export const mutations = {
 };
 
 export const actions = {
-    async nuxtServerInit({ commit }, { app }) {
+    async nuxtServerInit({ commit }, { app, $cookies }) {
+        // if ($cookies.get('darkMode')) {
+        //     commit('setDarkMode', $cookies.get('darkMode'));
+        // }
+
         await app.$axios
             .$get('/api2/beers/topBeers')
             .then(res => {
@@ -84,13 +92,33 @@ export const actions = {
                 return;
             });
     },
-    initApp({ commit }) {
+    initApp({ commit, dispatch }) {
+        // if (!this.$cookies.get('darkMode')) {
+        //     let darkMode;
+        //     if (window.matchMedia) darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        //     else darkMode = false;
+
+        //     dispatch('setCookie', `darkMode=${darkMode}`);
+        // }
+
         [
             ['isTouchScreen', !!('ontouchstart' in window || navigator.maxTouchPoints)],
             ['isVerySmallScreen', !!(window.innerWidth < 390)],
             ['isSmallScreen', !!(window.innerWidth < 420)],
             ['isPhoneSize', !!(window.innerWidth < 600)],
         ].forEach(x => commit('setObj', { name: x[0], obj: x[1] }));
+    },
+    setCookie({ commit }, blah) {
+        const c = blah.split('=');
+        switch (c[0]) {
+            case 'darkMode':
+                this.$axios.$post('/api/users/setCookie', {
+                    name: 'darkMode',
+                    value: c[1],
+                    expires: Math.round((Date.now() + 3600000 * 24 * 365 * 2) / 1000),
+                });
+                break;
+        }
     },
     login({ state, commit, getters }, params) {
         if (getters.myId) return;

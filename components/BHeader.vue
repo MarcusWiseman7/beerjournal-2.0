@@ -1,10 +1,22 @@
 <template>
     <div class="b-header">
         <div class="b-header--top-row">
-            <div v-if="isSmallScreen" class="b-header__menu-btn" @click="openMenu = !openMenu">
+            <div
+                v-if="isSmallScreen"
+                class="b-header__menu-btn"
+                @click="(openMenu = !openMenu), $emit('expand-header', openMenu)"
+            >
                 <img src="@/assets/icons/hamburger.svg" alt="Menu" />
             </div>
-            <nuxt-link to="/" class="b-header__title">
+            <div v-if="marcus" class="b-header__title">
+                <nuxt-link to="/">
+                    <span>BrewFoam</span>
+                </nuxt-link>
+                <div class="b-header--center" @click="navClick(4)">
+                    <img v-if="!isVerySmallScreen" src="@/assets/icons/beer.svg" alt="beer" />
+                </div>
+            </div>
+            <nuxt-link v-else to="/" class="b-header__title">
                 <span>BrewFoam</span>
                 <img v-if="!isVerySmallScreen" src="@/assets/icons/beer.svg" alt="beer" />
             </nuxt-link>
@@ -46,7 +58,7 @@ export default {
     },
     computed: {
         ...mapState(['isSmallScreen', 'isVerySmallScreen']),
-        ...mapGetters(['myId']),
+        ...mapGetters(['myId', 'marcus']),
     },
     methods: {
         navClick(i) {
@@ -63,8 +75,12 @@ export default {
                 case 3:
                     this.$store.dispatch('logout');
                     break;
+                case 4:
+                    this.$router.push({ name: 'Marcus' });
+                    break;
             }
             this.openMenu = false;
+            this.$emit('expand-header', this.openMenu);
         },
     },
 };
@@ -90,6 +106,12 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
+    }
+
+    &--center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &--top-row {

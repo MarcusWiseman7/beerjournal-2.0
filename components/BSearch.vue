@@ -168,7 +168,7 @@ $border: #e6e6e6;
     width: 100%;
     height: $search-height;
     border-radius: $search-height/2;
-    background: #fafafa;
+    // background: #fafafa;
     border: 1px solid $border;
 
     @include breakpoint(d) {

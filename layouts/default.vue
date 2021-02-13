@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-        <b-header></b-header>
+    <div id="app" :class="{ 'expand-header': expandHeader, 'dark-mode': darkMode }">
+        <b-header @expand-header="expandHeader = $event"></b-header>
         <div class="content">
             <Nuxt />
         </div>
@@ -35,8 +35,13 @@ import LoginSignup from '@/components/LoginSignup';
 
 export default {
     components: { BSpinner, BHeader, BFooter, LoginSignup },
+    data() {
+        return {
+            expandHeader: false,
+        };
+    },
     computed: {
-        ...mapState(['loading', 'bMessage', 'loginPopup', 'loginPopupObj']),
+        ...mapState(['loading', 'bMessage', 'loginPopup', 'loginPopupObj', 'darkMode']),
     },
     methods: {
         closeLoginPopup() {

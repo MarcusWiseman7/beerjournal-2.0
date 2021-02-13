@@ -149,12 +149,12 @@ $button--desktop--response-height: 34px;
         }
 
         &.selected {
-            border: 1px solid #a70a74;
+            border: 1px solid $maincolor;
 
             &:hover,
             &:focus,
             &:active {
-                border: 1px solid scale-color(#a70a74, $lightness: -10%);
+                border: 1px solid scale-color($maincolor, $lightness: -10%);
             }
         }
     }
@@ -182,7 +182,7 @@ $button--desktop--response-height: 34px;
     &--main {
         height: $button--main-height;
         border-radius: $button--main-height/2;
-        box-shadow: 2px 10px 20px rgba(144, 32, 113, 0.3);
+        box-shadow: 2px 10px 20px rgba($maincolor, 0.3);
 
         @include breakpoint(t) {
             max-width: 310px;
@@ -193,7 +193,7 @@ $button--desktop--response-height: 34px;
         &:hover,
         &:focus,
         &:active {
-            box-shadow: 2px 10px 20px darken(rgba(144, 32, 113, 0.3), 20%);
+            box-shadow: 2px 10px 20px darken($maincolor, 20%);
         }
 
         &.m-button--secondary {
@@ -283,9 +283,9 @@ $button--desktop--response-height: 34px;
 
         &.m-button--outline {
             background: #fff;
-            border: 1px solid #7c025a;
+            border: 1px solid $maincolor;
             font-weight: 700;
-            color: #7c025a;
+            color: $maincolor;
         }
     }
 
@@ -316,7 +316,7 @@ $button--desktop--response-height: 34px;
 
         @media (hover: hover) {
             &:not(.selected):hover {
-                background: #732889;
+                background: $maincolor-mute;
                 color: #fff;
             }
         }

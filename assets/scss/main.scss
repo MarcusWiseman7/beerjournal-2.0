@@ -6,6 +6,7 @@
 @import 'shared';
 @import 'mixins';
 @import 'global';
+@import 'theme';
 
 #app {
     font-family: '-apple-system', 'SF Pro Text', 'HelveticaNeue', 'Roboto', Helvetica, Arial, sans-serif;
@@ -29,6 +30,10 @@
     @include breakpoint(m) {
         padding: 160px 0 0 0;
     }
+}
+
+.expand-header {
+    padding: 160px 0 0 0 !important;
 }
 
 img {

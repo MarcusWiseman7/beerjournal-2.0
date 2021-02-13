@@ -37,7 +37,9 @@
                 </div>
             </div>
 
-            <b-button class="button" group="main" modifier="outline" @clicked="checkIfLogged">Add review</b-button>
+            <div class="beer__actions">
+                <b-button class="button" group="main" modifier="outline" @clicked="checkIfLogged">Add review</b-button>
+            </div>
 
             <beer-reviews :reviews="reviews"></beer-reviews>
         </div>
@@ -138,10 +140,17 @@ export default {
     }
 
     &__info {
+        padding-right: 20px;
+
         h1 {
             color: $maincolor;
             font-weight: 500;
             cursor: pointer;
+            word-wrap: break-word;
+        }
+
+        h2 {
+            word-wrap: break-word;
         }
     }
 
@@ -167,6 +176,10 @@ export default {
         justify-content: center;
         font-size: 22px;
         height: 50%;
+    }
+
+    &__actions {
+        padding: 0 10px;
     }
 }
 

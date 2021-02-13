@@ -23,7 +23,6 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
     z-index: 1;
     flex-shrink: 0;
 

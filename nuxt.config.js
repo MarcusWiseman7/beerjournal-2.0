@@ -47,6 +47,7 @@ export default {
         '@nuxtjs/auth',
         '@nuxtjs/proxy',
         '@nuxtjs/style-resources',
+        ['cookie-universal-nuxt', { parseJSON: false }],
     ],
 
     styleResources: {
