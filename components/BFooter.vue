@@ -1,17 +1,12 @@
-<template>
+<template functional>
     <footer>
-        <span>&copy; {{ date }} by Marcus Wiseman</span>
+        <span>&copy; {{ new Date().getFullYear() }} by Marcus Wiseman</span>
     </footer>
 </template>
 
 <script>
 export default {
     name: 'BFooter',
-    computed: {
-        date() {
-            return new Date().getFullYear();
-        },
-    },
 };
 </script>
 

@@ -28,13 +28,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import BSpinner from '@/components/BSpinner';
-import BHeader from '@/components/BHeader';
-import BFooter from '@/components/BFooter';
-import LoginSignup from '@/components/LoginSignup';
 
 export default {
-    components: { BSpinner, BHeader, BFooter, LoginSignup },
     data() {
         return {
             expandHeader: false,

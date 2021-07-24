@@ -1,5 +1,4 @@
 const pkg = require('./package');
-const url = process.env.NODE_;
 
 export default {
     // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -20,21 +19,18 @@ export default {
             { rel: 'manifest', href: '/site.webmanifest' },
         ],
     },
-
     loading: { color: '#ffa000', height: '4px' },
-
     // Global CSS (https://go.nuxtjs.dev/config-css)
     css: ['@/assets/scss/main.scss'],
-
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: ['@/plugins/my-global-components', '@/plugins/v-scroll-lock'],
-
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
-
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-    // buildModules: [['@nuxtjs/google-analytics', { id: 'UA-140466990-1' }]],
-
+    buildModules: [
+        '@nuxtjs/color-mode',
+        // ['@nuxtjs/google-analytics', { id: 'UA-140466990-1' }]
+    ],
     // Modules (https://go.nuxtjs.dev/config-modules)
     modules: [
         // https://go.nuxtjs.dev/axios
@@ -43,17 +39,16 @@ export default {
         '@nuxtjs/pwa',
         'nuxt-compress',
         'nuxt-helmet',
-        '@nuxtjs/component-cache',
+        ['@nuxtjs/component-cache', { maxAge: 1000 * 60 * 60 }],
         '@nuxtjs/auth',
         '@nuxtjs/proxy',
         '@nuxtjs/style-resources',
         ['cookie-universal-nuxt', { parseJSON: false }],
+        '@nuxtjs/sitemap', // Always last
     ],
-
     styleResources: {
         scss: ['./assets/scss/_colors.scss', './assets/scss/_mixins.scss'],
     },
-
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
         proxy: true,
@@ -97,7 +92,6 @@ export default {
             },
         },
     },
-
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
         transpile: ['v-body-scroll-lock'],

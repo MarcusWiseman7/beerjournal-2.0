@@ -99,6 +99,7 @@ export default {
             if (event.target.files.length === 1) {
                 if (!event.target.files[0].type.startsWith('image/')) {
                     this.uploadError = true;
+                    return;
                 }
                 this.uploadedFile = event.target.files[0];
                 event.target.value = ''; // Allow upload of same file after cancel

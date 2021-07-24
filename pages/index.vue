@@ -7,13 +7,10 @@
 </template>
 
 <script>
-import BSearch from '@/components/BSearch';
-import BWrapper from '@/components/BWrapper';
 import { mapState } from 'vuex';
 
 export default {
     name: 'Home',
-    components: { BSearch, BWrapper },
     computed: {
         ...mapState(['searchResults', 'beers', 'topBeers']),
     },

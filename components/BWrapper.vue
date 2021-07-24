@@ -70,15 +70,16 @@ export default {
         }
 
         @include breakpoint(full) {
-            width: 60%;
+            width: 1000px;
         }
     }
 
     &__beers {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         flex-wrap: wrap;
         margin: 10px 0;
+        padding: 0 2px;
     }
 
     &__no-results {

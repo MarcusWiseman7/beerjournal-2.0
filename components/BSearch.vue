@@ -176,7 +176,7 @@ $border: #e6e6e6;
     }
 
     @include breakpoint(full) {
-        width: 50%;
+        width: 1000px;
     }
 
     &:focus {

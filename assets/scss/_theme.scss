@@ -1,13 +1,33 @@
+:root {
+    --color: #243746;
+    --color-primary: #ffa000;
+    --color-secondary: #0e2233;
+    --bg: #f3f5f4;
+    --bg-secondary: #fff;
+    --border-color: #ddd;
+}
+
 .dark-mode {
-    background: #fff linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+    --color: #ebf4f1;
+    --color-primary: #ffa000;
+    --color-secondary: #e6e6e6;
+    // --bg: #091a28;
+    --bg: #1f2931;
+    --bg-secondary: #071521;
+    --border-color: #0d2538;
 
-    input,
-    .input,
-    .input::before {
-        background-color: transparent !important;
-    }
+    .popup {
+        &__container {
+            background-color: var(--bg) !important;
+        }
 
-    .popup__container {
-        background: #fff linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)) !important;
+        &__content {
+            color: var(--color) !important;
+        }
     }
 }
+
+// .dark-mode {
+//     background: #fff linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+
+// }

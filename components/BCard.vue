@@ -47,9 +47,11 @@ export default {
     @include breakpoint(m) {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
         padding: 10px;
-        margin: 10px;
+        margin: 10px 0;
         flex-direction: row;
         width: auto;
+        width: 30%;
+        min-width: 250px;
 
         img {
             height: 100px;
