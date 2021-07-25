@@ -29,6 +29,7 @@ export default {
     // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
     buildModules: [
         '@nuxtjs/color-mode',
+        'nuxt-compress',
         // ['@nuxtjs/google-analytics', { id: 'UA-140466990-1' }]
     ],
     // Modules (https://go.nuxtjs.dev/config-modules)
@@ -37,7 +38,6 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
-        'nuxt-compress',
         'nuxt-helmet',
         ['@nuxtjs/component-cache', { maxAge: 1000 * 60 * 60 }],
         '@nuxtjs/auth',
