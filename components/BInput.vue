@@ -118,11 +118,11 @@ label {
     letter-spacing: -0.02em;
     line-height: 14px;
     text-align: left;
-    color: $maincolor;
+    color: var(--color-main);
     padding-left: 22px;
 
     &.error {
-        color: $errorcolor;
+        color: var(--color-error);
     }
 }
 
@@ -206,7 +206,7 @@ $search-height: 36px;
     }
 
     &--error {
-        background: $errorcolor;
+        background: var(--color-error);
         box-shadow: 0 0 1px 0 #d98989 inset, 0 0 1px 0 #d98989;
 
         &::before {
@@ -217,7 +217,7 @@ $search-height: 36px;
             padding-left: 22px;
             margin-top: 4px;
             font-size: 12px;
-            color: $errorcolor;
+            color: var(--color-error);
             text-align: left;
         }
     }
@@ -450,7 +450,7 @@ $search-height: 36px;
     }
 
     input:checked + label::before {
-        box-shadow: inset 0 0 0 6px $maincolor-mute;
+        box-shadow: inset 0 0 0 6px var(--color-main-muted);
     }
 }
 </style>

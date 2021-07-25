@@ -154,7 +154,7 @@ export default {
 
 <style lang="scss" scoped>
 label {
-    color: $maincolor;
+    color: var(--color-main);
     font-weight: 700;
 }
 
@@ -167,18 +167,18 @@ label {
 
     p {
         font-size: 14px;
-        color: $textcolor;
+        color: var(--color-text);
         font-weight: 400;
         margin-top: 8px;
     }
 
     &--error {
-        box-shadow: 0 0 6px $errorcolor;
+        box-shadow: 0 0 6px var(--color-error);
     }
 }
 
 .error {
-    color: $errorcolor;
+    color: var(--color-error);
     font-size: 12px;
     margin-top: 4px;
 }

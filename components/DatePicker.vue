@@ -174,7 +174,7 @@ export default {
 
 <style lang="scss" scoped>
 .picker {
-    background-color: $backgroundcolor;
+    background-color: var(--bg);
     position: absolute;
     top: 90px;
     left: 160px;
@@ -191,7 +191,7 @@ export default {
         padding: 20px 0 20px 0;
 
         &--month {
-            color: $textcolor;
+            color: var(--color-text);
         }
 
         &--arrow {
@@ -215,7 +215,7 @@ export default {
         height: 200px;
         width: 280px;
         margin: 0 auto 0 auto;
-        // border: 1px solid $textcolor;
+        // border: 1px solid var(--color-text);
     }
 
     &__week {
@@ -225,27 +225,27 @@ export default {
     &__date {
         width: 14%;
         border: 2px solid transparent;
-        color: $textcolor;
+        color: var(--color-text);
         font-weight: bold;
         text-align: center;
 
         &--selected {
-            color: $maincolor;
-            border: 2px solid $maincolor;
+            color: var(--color-main);
+            border: 2px solid var(--color-main);
         }
 
         &--disabled {
-            color: $lighttextcolor;
+            color: var(--color-text-secondary);
         }
     }
 
     &__date:hover {
-        color: $maincolor;
-        border: 2px solid $maincolor;
+        color: var(--color-main);
+        border: 2px solid var(--color-main);
     }
 
     &__date--disabled:hover {
-        color: $lighttextcolor;
+        color: var(--color-text-secondary);
         border: none;
     }
 }

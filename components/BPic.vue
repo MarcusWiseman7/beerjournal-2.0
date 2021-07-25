@@ -43,7 +43,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $lighttextcolor;
+    background-color: --color-text-secondary;
     border-radius: 4px;
     opacity: 0.3;
 }

@@ -5,9 +5,15 @@
 
         <div class="item__desc">
             <h3>{{ item.beerName }}</h3>
-            <h5>{{ item.brewery.name }}</h5>
-            <p>{{ item.style }}</p>
-            <b-rating :rating="item.averageRating" :id="item._id" :size="16"></b-rating>
+            <div class="item__desc__info">
+                <span class="bolder">{{ item.brewery.name }}</span> - <span class="lighter">{{ item.style }}</span>
+            </div>
+            <b-rating
+                :rating="item.averageRating"
+                :count="item.totalNumberOfRatings"
+                :id="item._id"
+                :size="16"
+            ></b-rating>
         </div>
     </nuxt-link>
     <nuxt-link v-else-if="item" :to="`/SingleBrewery/${item._id}`" class="item">
@@ -30,55 +36,62 @@ export default {
 
 <style lang="scss" scoped>
 .item {
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-    padding: 8px;
+    border: 1px solid #f7f7fa;
+    box-sizing: border-box;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    margin: 6px;
-    border-radius: 8px;
-    width: calc(50% - 12px);
-    min-height: 120px;
+    align-items: center;
+    width: 160px;
+    margin: 0 12px 12px 0;
 
     img {
-        height: 50px;
-        width: 50px;
+        height: 90px;
+        width: 160px;
+        object-fit: contain;
+        border-radius: 12px 12px 0 0;
     }
 
-    @include breakpoint(m) {
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-        padding: 10px;
-        margin: 10px 0;
-        flex-direction: row;
-        width: auto;
-        width: 30%;
-        min-width: 250px;
-
-        img {
-            height: 100px;
-            width: 100px;
-        }
-    }
+    // @include breakpoint(m) {
+    //     img {
+    //         height: 100px;
+    //         width: 100px;
+    //     }
+    // }
 
     &__desc {
-        margin-left: 6px;
-        padding: 8px 0 0 0;
+        padding: 12px;
         display: flex;
         flex-direction: column;
-        color: $textcolor;
+        color: var(--color-text);
         overflow: hidden;
         word-wrap: break-word;
 
         h3 {
-            color: $maincolor;
+            color: var(--color-text);
         }
 
-        @include breakpoint(m) {
-            width: 160px;
+        &__info {
+            display: flex;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 20px;
+            margin: 6px 0 14px 0;
+
+            .bolder {
+                font-weight: 500;
+                margin-right: 2px;
+            }
+
+            .lighter {
+                font-weight: 400;
+                margin-left: 2px;
+            }
         }
     }
 
     &:hover {
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
     }
 }
 </style>

@@ -18,6 +18,24 @@ export const state = () => ({
     searchQuery: '',
     authContact: null,
     darkMode: false,
+
+    navigationItems: [
+        { name: 'Home', route: { name: 'index' } },
+        { name: 'Discover', route: { name: 'Discover' } },
+        { name: 'Profile', route: { name: 'Profile' } },
+    ],
+    socialItems: [
+        { name: 'Instagram', icon: require('@/assets/icons/nav/instagram.svg'), route: 'https://google.com' },
+        { name: 'Facebook', icon: require('@/assets/icons/nav/facebook.svg'), route: 'https://google.com' },
+        { name: 'Google', icon: require('@/assets/icons/nav/google.svg'), route: 'https://google.com' },
+    ],
+    footerItems: [
+        { name: 'Privacy', route: { name: 'index' } },
+        { name: 'Terms', route: { name: 'index' } },
+        { name: 'Advertising', route: { name: 'index' } },
+        { name: 'Ad choices', route: { name: 'index' } },
+        { name: 'Cookies', route: { name: 'index' } },
+    ],
 });
 
 export const getters = {

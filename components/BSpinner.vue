@@ -36,9 +36,9 @@ export default {
 .spinner {
     font-size: 10px;
     border-top: 1.1em solid rgba(255, 255, 255, 0.2);
-    border-right: 1.1em solid $maincolor;
-    border-bottom: 1.1em solid $maincolor;
-    border-left: 1.1em solid $maincolor;
+    border-right: 1.1em solid var(--color-main);
+    border-bottom: 1.1em solid var(--color-main);
+    border-left: 1.1em solid var(--color-main);
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);

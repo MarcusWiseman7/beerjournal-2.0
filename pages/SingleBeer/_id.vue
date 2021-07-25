@@ -141,7 +141,7 @@ export default {
         padding-right: 20px;
 
         h1 {
-            color: $maincolor;
+            color: var(--color-main);
             font-weight: 500;
             cursor: pointer;
             word-wrap: break-word;
@@ -163,7 +163,7 @@ export default {
             width: 50%;
 
             &:first-child {
-                border-right: 1px solid $lighttextcolor;
+                border-right: 1px solid var(--color-text-secondary);
             }
         }
     }

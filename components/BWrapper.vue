@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__container">
-            <h2>
+            <h2 v-if="hasTitle">
                 <span>{{ title }}</span>
                 <span v-if="which == 'searchResults'"> for "{{ $store.state.searchQuery }}" </span>
             </h2>
@@ -29,6 +29,7 @@ export default {
     props: {
         which: { type: String, default: '' },
         items: { type: Array, default: () => null },
+        hasTitle: { type: Boolean, default: true },
     },
     data() {
         return {
@@ -59,7 +60,7 @@ export default {
 .wrapper {
     display: flex;
     justify-content: center;
-    padding: 0 20px;
+    // padding: 0 20px;
 
     &__container {
         overflow: hidden;
@@ -76,7 +77,7 @@ export default {
 
     &__beers {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         flex-wrap: wrap;
         margin: 10px 0;
         padding: 0 2px;

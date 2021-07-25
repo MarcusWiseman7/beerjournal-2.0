@@ -130,7 +130,7 @@ export default {
         align-items: center;
 
         span {
-            color: $maincolor;
+            color: var(--color-main);
             font-size: 60px;
             font-weight: 300;
             margin: 0 6px 0 0;

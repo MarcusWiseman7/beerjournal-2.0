@@ -100,7 +100,7 @@ export default {
 
     &__info {
         h1 {
-            color: $maincolor;
+            color: var(--color-main);
             font-weight: 500;
         }
     }
@@ -116,7 +116,7 @@ export default {
             width: 50%;
 
             &:first-child {
-                border-right: 1px solid $lighttextcolor;
+                border-right: 1px solid var(--color-text-secondary);
             }
         }
     }
@@ -133,7 +133,7 @@ export default {
         text-align: center;
         margin: 40px 0;
         padding-bottom: 8px;
-        border-bottom: 1px solid $maincolor;
+        border-bottom: 1px solid var(--color-main);
     }
 }
 

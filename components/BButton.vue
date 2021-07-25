@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 //mobile
-$button--main-height: 46px;
+$button--main-height: 56px;
 $button--cta-height: 38px;
 $button--quick-height: 32px;
 $button--response-height: 26px;
@@ -93,12 +93,12 @@ $button--desktop--response-height: 34px;
     &--cta,
     &--quick,
     &--response {
-        background: $maincolor;
+        background: var(--color-main);
         color: #fff;
 
         &[disabled] {
             cursor: no-drop;
-            background: $maincolor-disabled;
+            background: var(--color-main-disabled);
 
             & > label {
                 cursor: no-drop;
@@ -107,7 +107,7 @@ $button--desktop--response-height: 34px;
             &:hover,
             &:focus,
             &:active {
-                background: $maincolor-disabled;
+                background: var(--color-main-disabled);
             }
         }
 
@@ -115,22 +115,22 @@ $button--desktop--response-height: 34px;
             &:hover,
             &:focus,
             &:active {
-                background: scale-color($maincolor, $lightness: -20%);
+                background: var(--color-main-darker);
             }
         }
     }
 
     &--outline {
         background: transparent;
-        border: 1px solid $maincolor;
-        color: $maincolor;
+        border: 1px solid var(--color-main);
+        color: var(--color-main);
 
         &:hover,
         &:focus,
         &:active {
             background: transparent;
-            border: 1px solid scale-color($maincolor, $lightness: -20%);
-            color: scale-color($maincolor, $lightness: -20%);
+            border: 1px solid var(--color-main-darker);
+            color: var(--color-main-darker);
         }
     }
 
@@ -149,12 +149,12 @@ $button--desktop--response-height: 34px;
         }
 
         &.selected {
-            border: 1px solid $maincolor;
+            border: 1px solid var(--color-main);
 
             &:hover,
             &:focus,
             &:active {
-                border: 1px solid scale-color($maincolor, $lightness: -10%);
+                border: 1px solid var(--color-main-darker);
             }
         }
     }
@@ -181,8 +181,8 @@ $button--desktop--response-height: 34px;
     // Main button
     &--main {
         height: $button--main-height;
-        border-radius: $button--main-height/2;
-        box-shadow: 2px 10px 20px rgba($maincolor, 0.3);
+        border-radius: 12px; // $button--main-height/2;
+        box-shadow: 2px 10px 20px rgba(var(--color-main), 0.3);
 
         @include breakpoint(t) {
             max-width: 310px;
@@ -193,7 +193,7 @@ $button--desktop--response-height: 34px;
         &:hover,
         &:focus,
         &:active {
-            box-shadow: 2px 10px 20px darken($maincolor, 20%);
+            box-shadow: 2px 10px 20px var(--color-main-darker);
         }
 
         &.m-button--secondary {
@@ -277,15 +277,15 @@ $button--desktop--response-height: 34px;
             }
 
             &--purple {
-                background: $maincolor-mute;
+                background: var(--color-main-muted);
             }
         }
 
         &.m-button--outline {
             background: #fff;
-            border: 1px solid $maincolor;
+            border: 1px solid var(--color-main);
             font-weight: 700;
-            color: $maincolor;
+            color: var(--color-main);
         }
     }
 
@@ -299,8 +299,8 @@ $button--desktop--response-height: 34px;
         font-size: 14px;
         letter-spacing: -0.02em;
         background: #fafafa;
-        border: 1px solid $maincolor-mute;
-        color: $maincolor-mute;
+        border: 1px solid var(--color-main-muted);
+        color: var(--color-main-muted);
 
         span {
             transform: translateX(0px);
@@ -316,13 +316,13 @@ $button--desktop--response-height: 34px;
 
         @media (hover: hover) {
             &:not(.selected):hover {
-                background: $maincolor-mute;
+                background: var(--color-main-muted);
                 color: #fff;
             }
         }
 
         &.selected {
-            background: $maincolor-mute;
+            background: var(--color-main-muted);
             color: #fff;
 
             span {

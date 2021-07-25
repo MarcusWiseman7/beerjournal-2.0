@@ -1,6 +1,5 @@
 @import 'animations';
 @import 'buttons';
-@import 'colors';
 @import 'inputs';
 @import 'reset';
 @import 'shared';
@@ -59,13 +58,13 @@ body {
 }
 
 a {
-    color: var(--color-primary);
+    color: var(--color-main);
     text-decoration: none;
     font-weight: 600;
 }
 
 a:visited {
-    color: $maincolor;
+    color: var(--color-main);
 }
 
 *:focus {

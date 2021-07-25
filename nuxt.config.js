@@ -30,6 +30,8 @@ export default {
     buildModules: [
         '@nuxtjs/color-mode',
         'nuxt-compress',
+        '@nuxtjs/device',
+        '@nuxtjs/svg',
         // ['@nuxtjs/google-analytics', { id: 'UA-140466990-1' }]
     ],
     // Modules (https://go.nuxtjs.dev/config-modules)
@@ -74,6 +76,9 @@ export default {
         brotli: {
             threshold: 10240,
         },
+    },
+    device: {
+        refreshOnResize: true,
     },
     auth: {
         redirect: {

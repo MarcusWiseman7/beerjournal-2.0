@@ -1,5 +1,6 @@
 <template>
     <div class="rating">
+        <div v-if="!reviewing && cRating" class="rating__number" :class="{ small: size < 70 }">{{ cRating }}</div>
         <BeerSVG
             v-for="b in 5"
             :key="id + '-' + b"
@@ -11,7 +12,9 @@
             @click.native="onClick(b)"
             :class="{ pointer: reviewing }"
         ></BeerSVG>
-        <div v-if="!reviewing && cRating" class="number" :class="{ small: size < 70 }">({{ cRating }})</div>
+        <div v-if="!reviewing && cRating && count" class="rating__count" :class="{ small: size < 70 }">
+            ({{ count }})
+        </div>
     </div>
 </template>
 
@@ -26,6 +29,7 @@ export default {
         reviewing: { type: Boolean, default: false },
         id: { type: String, required: true },
         size: { type: Number, default: 70 },
+        count: { type: Number, required: false },
     },
     data() {
         return {
@@ -85,18 +89,24 @@ export default {
     align-items: center;
     justify-content: center;
     height: max-content;
+
+    &__number {
+        font-weight: bold;
+        color: var(--color-text);
+        margin-right: 4px;
+    }
+
+    &__count {
+        color: var(--color-text-secondary);
+        margin-left: 4px;
+    }
 }
 
 .pointer {
     cursor: pointer;
 }
 
-.number {
-    margin-left: 8px;
-}
-
 .small {
     font-size: 12px;
-    margin-left: 2px;
 }
 </style>

@@ -55,15 +55,15 @@ export default {
     }
 
     &--error {
-        background-color: $errorcolor;
+        background-color: var(--color-error);
     }
 
     &--success {
-        background-color: $successcolor;
+        background-color: var(--color-success);
     }
 
     &--info {
-        background-color: $infocolor;
+        background-color: var(--color-info);
     }
 }
 </style>
