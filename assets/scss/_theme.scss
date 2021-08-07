@@ -14,13 +14,22 @@
     --color-info: grey;
 
     --bg: #e5e5e5;
-    --bg-plain: #ffffff;
-    --bg-secondary: #f2f4f8;
+    --bg-secondary: #ffffff;
+    --bg-card: #f2f4f8;
 
     --border-color: #ddd;
 }
 
 .dark-mode {
+    --bg: #3c3737;
+    --bg-secondary: #332d2d;
+
+    --bg-card-hover: #514c4c;
+    --border-color: #484c51;
+
+    --color-text: #ffffff;
+    --color-text-secondary: #999faa;
+
     // --color: #ebf4f1;
     // --color-primary: #ffa000;
     // --color-secondary: #e6e6e6;

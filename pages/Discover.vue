@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="page-inner">
         <b-search class="search"></b-search>
         <b-wrapper v-if="searchResults" which="searchResults" :items="searchResults"></b-wrapper>
         <b-wrapper which="topBeers" :items="topBeers"></b-wrapper>
@@ -11,7 +11,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'Discover',
-    layout: ctx => (ctx.$device.isMobile ? 'default' : 'desktop'),
+    layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'desktop'),
     computed: {
         ...mapState(['searchResults', 'beers', 'topBeers']),
     },

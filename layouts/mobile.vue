@@ -1,6 +1,13 @@
 <template>
-    <div id="app" :class="{ 'expand-header': expandHeader, 'dark-mode': darkMode }">
-        <b-header @expand-header="expandHeader = $event"></b-header>
+    <div id="app" :class="{ 'dark-mode': darkMode }">
+        <header>
+            <menu-icon class="hamburger" @click="openMenu = true"></menu-icon>
+        </header>
+
+        <transition name="slide-side">
+            <main-nav v-if="openMenu" :mobile="true" @close="openMenu = false"></main-nav>
+        </transition>
+
         <div class="content">
             <Nuxt />
         </div>
@@ -28,11 +35,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import MenuIcon from '@/assets/icons/nav/menu.svg?inline';
 
 export default {
+    components: { MenuIcon },
     data() {
         return {
-            expandHeader: false,
+            openMenu: false,
         };
     },
     computed: {
@@ -53,4 +62,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+header {
+    background-color: #3c3737;
+
+    .hamburger {
+        margin: 11px 28px;
+        height: 24px;
+        width: 24px;
+    }
+}
+</style>

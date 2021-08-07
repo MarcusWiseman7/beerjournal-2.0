@@ -1,12 +1,13 @@
 <template>
     <div class="wrapper">
         <div class="wrapper__container">
-            <h2 v-if="hasTitle">
-                <span>{{ title }}</span>
-                <span v-if="which == 'searchResults'"> for "{{ $store.state.searchQuery }}" </span>
-            </h2>
             <div v-if="items && items.length > 0" class="wrapper__beers">
-                <b-card v-for="(item, i) in items.slice(0, maxResults)" :key="i" :item="item"></b-card>
+                <b-card
+                    v-for="(item, i) in items.slice(0, maxResults)"
+                    :modifiers="which == 'news' ? ['news'] : []"
+                    :key="i"
+                    :item="item"
+                ></b-card>
             </div>
             <div v-else-if="which == 'searchResults'" class="wrapper__no-results">
                 <h3>Sorry, no results for "{{ $store.state.searchQuery }}"...</h3>
@@ -36,11 +37,6 @@ export default {
             maxResults: 6,
         };
     },
-    watch: {
-        items: function() {
-            this.maxResults = 6;
-        },
-    },
     computed: {
         ...mapGetters(['myId']),
         title() {
@@ -60,27 +56,23 @@ export default {
 .wrapper {
     display: flex;
     justify-content: center;
-    // padding: 0 20px;
 
     &__container {
         overflow: hidden;
         word-wrap: break-word;
 
-        @include breakpoint(d) {
-            width: 80%;
-        }
+        // @include breakpoint(d) {
+        //     width: 80%;
+        // }
 
-        @include breakpoint(full) {
-            width: 1000px;
-        }
+        // @include breakpoint(full) {
+        //     width: 1000px;
+        // }
     }
 
     &__beers {
         display: flex;
-        // justify-content: space-between;
         flex-wrap: wrap;
-        margin: 10px 0;
-        padding: 0 2px;
     }
 
     &__no-results {

@@ -1,11 +1,11 @@
 <template>
-    <div></div>
+    <div class="page-inner"></div>
 </template>
 
 <script>
 export default {
     name: 'Profile',
-    layout: ctx => (ctx.$device.isMobile ? 'default' : 'desktop'),
+    layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'desktop'),
 };
 </script>
 
