@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <div class="wrapper__container">
-            <div v-if="items && items.length > 0" class="wrapper__beers">
+        <div class="wrapper__content">
+            <div v-if="items && items.length > 0" class="wrapper__container">
                 <b-card
                     v-for="(item, i) in items.slice(0, maxResults)"
-                    :modifiers="which == 'news' ? ['news'] : []"
+                    :modifiers="modifiers"
                     :key="i"
                     :item="item"
                 ></b-card>
@@ -28,9 +28,9 @@ export default {
     name: 'BWrapper',
     components: { BCard },
     props: {
+        modifiers: { type: Array, default: () => [] },
         which: { type: String, default: '' },
         items: { type: Array, default: () => null },
-        hasTitle: { type: Boolean, default: true },
     },
     data() {
         return {
@@ -39,9 +39,6 @@ export default {
     },
     computed: {
         ...mapGetters(['myId']),
-        title() {
-            return this.which == 'topBeers' ? 'Top picks' : this.which == 'searchResults' ? 'Search results' : '';
-        },
     },
     methods: {
         checkIfLogged() {
@@ -54,23 +51,15 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
 
-    &__container {
+    &__content {
         overflow: hidden;
         word-wrap: break-word;
-
-        // @include breakpoint(d) {
-        //     width: 80%;
-        // }
-
-        // @include breakpoint(full) {
-        //     width: 1000px;
-        // }
     }
 
-    &__beers {
+    &__container {
         display: flex;
         flex-wrap: wrap;
     }

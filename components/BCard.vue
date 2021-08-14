@@ -2,20 +2,23 @@
     <nuxt-link
         v-if="item && item.hasOwnProperty('brewery')"
         :to="`/SingleBeer/${item._id}`"
-        class="item"
-        :class="modifiers.map(x => 'item--' + x)"
+        class="card no-drag"
+        :class="[
+            modifiers.map(x => 'card--' + x),
+            { disabled: dragging, 'card--desktop': !mobile, 'card--mobile': mobile },
+        ]"
     >
         <img v-if="item.logo || item.brewery.logo" :src="item.logo || item.brewery.logo" alt="logo" />
         <b-pic v-else></b-pic>
 
-        <div class="item__desc">
+        <div class="card__desc">
             <div>
                 <h3>{{ item.beerName }}</h3>
-                <div class="item__desc__info">
+                <div class="card__desc__info">
                     <span class="bolder">{{ item.brewery.name }}</span>
                     <span>{{ item.style }}</span>
                 </div>
-                <div v-if="modifiers.includes('news')" class="item__news">
+                <div v-if="modifiers.includes('full-card')" class="full-card">
                     <v-clamp :max-lines="2" tag="p" ellipsis="">
                         <template>{{ item.brewery.description }}</template>
                         <template v-slot:after="{ clamped }">
@@ -36,11 +39,11 @@
     <nuxt-link
         v-else-if="item"
         :to="`/SingleBrewery/${item._id}`"
-        class="item"
-        :class="modifiers.map(x => 'item--' + x)"
+        class="card"
+        :class="[modifiers.map(x => 'card--' + x), { disabled: dragging }]"
     >
         <img :src="item.logo ? item.logo : ''" alt="logo" />
-        <div class="item__desc">
+        <div class="card__desc">
             <h3>{{ item.name }}</h3>
             <h5>{{ item.type }}</h5>
         </div>
@@ -55,34 +58,52 @@ export default {
     props: {
         item: { type: Object, default: () => null },
         modifiers: { type: Array, default: () => [] },
+        dragging: { type: Boolean, default: false },
     },
     components: { VClamp },
+    computed: {
+        mobile() {
+            return this.$device.isMobile;
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
-.item {
+.disabled {
+    pointer-events: none;
+}
+
+.card {
     border: 1px solid var(--border-color);
     box-sizing: border-box;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(25% - 9px);
     margin: 0 12px 12px 0;
     background-color: var(--bg);
     overflow: hidden;
 
-    &:nth-child(4n) {
-        margin-right: 0;
-    }
+    &--desktop {
+        width: calc(25% - 9px);
 
-    &--news {
-        width: calc(50% - 6px);
-
-        &:nth-child(2n) {
+        &:nth-child(4n) {
             margin-right: 0;
         }
+
+        &.card--full-card {
+            width: calc(50% - 6px);
+
+            &:nth-child(2n) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &--mobile {
+        min-width: 160px;
+        max-width: 160px;
     }
 
     img {
@@ -91,13 +112,6 @@ export default {
         object-fit: contain;
         border-radius: 12px 12px 0 0;
     }
-
-    // @include breakpoint(m) {
-    //     img {
-    //         height: 100px;
-    //         width: 100px;
-    //     }
-    // }
 
     &__desc {
         padding: 12px;
@@ -121,16 +135,15 @@ export default {
                 font-weight: 600;
             }
         }
-    }
 
-    &__news {
-        font-size: 14px;
-        line-height: 20px;
-        margin-bottom: 14px;
+        .full-card {
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 14px;
+        }
     }
 
     &:hover {
-        // box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
         background-color: var(--bg-card-hover);
     }
 }

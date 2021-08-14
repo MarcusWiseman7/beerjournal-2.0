@@ -1,9 +1,25 @@
 <template>
     <div class="page-inner">
         <h1 class="headline first">New and popular</h1>
-        <b-wrapper which="news" :items="topBeers.slice(0, 2)" :hasTitle="false"></b-wrapper>
+        <b-wrapper :modifiers="['full-card']" :items="topBeers.slice(0, 2)"></b-wrapper>
+
         <h1 class="headline">Top rated beers</h1>
-        <b-wrapper which="topBeers" :items="topBeers" :hasTitle="false"></b-wrapper>
+        <b-horizontal-wrapper
+            v-slot="slotProps"
+            :shift="248"
+            :snapping="true"
+            :scrollid="'scroll-top-beers'"
+            @scroll="handleScroll"
+        >
+            <b-card
+                v-for="(item, i) in topBeers"
+                :key="'b-card-' + i"
+                :modifiers="['mobile']"
+                :item="item"
+                :hovered="slotProps.isHovered"
+                :dragging="slotProps.isDragging"
+            ></b-card>
+        </b-horizontal-wrapper>
     </div>
 </template>
 
@@ -15,6 +31,23 @@ export default {
     layout: ctx => (ctx.$device.isMobile ? 'mobile' : 'desktop'),
     computed: {
         ...mapState(['searchResults', 'beers', 'topBeers']),
+        mobile() {
+            return this.$device.isMobile;
+        },
+    },
+    methods: {
+        handleScroll(e) {
+            // let newPageReq =
+            //     e.target.scrollWidth - e.target.scrollLeft - 2 * e.target.clientWidth < e.target.clientWidth;
+            // if (newPageReq && this.canLoadOlder) {
+            //     this.$store.dispatch('epictour/getList', {
+            //         type: 'chatList',
+            //         myGender: this.myProfile.gender,
+            //         mySexuality: this.myProfile.sexuality,
+            //         nextpage: true,
+            //     });
+            // }
+        },
     },
 };
 </script>

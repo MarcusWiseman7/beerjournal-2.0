@@ -26,9 +26,16 @@
 }
 
 img {
-    -webkit-user-select: none; /* neoznacovat obrazky */
-    -webkit-touch-callout: none; /* zakazani stahovani obrazku na iphonu */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
     transform: translateZ(0);
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
 }
 
 html {
@@ -100,4 +107,13 @@ input,
         letter-spacing: -0.015em;
         color: var(--color-text);
     }
+}
+
+.no-drag {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -ms-user-drag: none;
+    user-drag: none;
 }
